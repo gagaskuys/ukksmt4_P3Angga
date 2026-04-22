@@ -5,15 +5,60 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="assets/images/favicon.svg" type="image/x-icon" />
-    <title>Sign In | PlainAdmin Demo</title>
+    <title>Sign Out | PlainAdmin Demo</title>
 
     <!-- ========== All CSS files linkup ========= -->
+    <!-- Menggunakan path standar HTML, sesuaikan dengan struktur folder aset Anda -->
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" />
 <link rel="stylesheet" href="{{ asset('assets/css/lineicons.css') }}" />
 <link rel="stylesheet" href="{{ asset('assets/css/materialdesignicons.min.css') }}" />
 <link rel="stylesheet" href="{{ asset('assets/css/fullcalendar.css') }}" />
 <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}" />
 
+    <style>
+      /* Tambahan CSS Khusus untuk Halaman Logout */
+      .logout-icon-wrapper {
+        width: 80px;
+        height: 80px;
+        background-color: #FFEAEA; /* Warna background merah muda */
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px auto;
+      }
+      
+      .logout-icon-wrapper svg {
+        color: #FF4D4D; /* Warna icon merah */
+        width: 40px;
+        height: 40px;
+      }
+
+      /* Loading Spinner sederhana */
+      .loading-spinner {
+        display: none;
+        width: 1rem;
+        height: 1rem;
+        border: 2px solid currentColor;
+        border-right-color: transparent;
+        border-radius: 50%;
+        animation: spinner-border .75s linear infinite;
+        margin-right: 0.5rem;
+      }
+
+      @keyframes spinner-border {
+        100% { transform: rotate(360deg); }
+      }
+
+      .logout-success-msg {
+        display: none;
+        text-align: center;
+      }
+      
+      .logout-actions {
+        transition: opacity 0.3s ease;
+      }
+    </style>
   </head>
   <body>
     <!-- ======== Preloader =========== -->
@@ -119,10 +164,10 @@
             </a>
             <ul id="ddmenu_3" class="collapsed show dropdown-nav">
               <li>
-                <a href="signin.html" class="active"> Sign In </a>
+                <a href="{{ url('/login') }}"> Sign In </a>
               </li>
               <li>
-                <a href="signup.html"> Sign Up </a>
+                <a href="{{ url('/logout') }}"> Sign Out</a>
               </li>
             </ul>
           </li>
@@ -137,7 +182,7 @@
               aria-expanded="false"
               aria-label="Toggle navigation"
             >
-              <span class="icon">
+              <span class="icon"> 
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
                     d="M4.16666 3.33335C4.16666 2.41288 4.91285 1.66669 5.83332 1.66669H14.1667C15.0872 1.66669 15.8333 2.41288 15.8333 3.33335V16.6667C15.8333 17.5872 15.0872 18.3334 14.1667 18.3334H5.83332C4.91285 18.3334 4.16666 17.5872 4.16666 16.6667V3.33335ZM6.04166 5.00002C6.04166 5.3452 6.32148 5.62502 6.66666 5.62502H13.3333C13.6785 5.62502 13.9583 5.3452 13.9583 5.00002C13.9583 4.65485 13.6785 4.37502 13.3333 4.37502H6.66666C6.32148 4.37502 6.04166 4.65485 6.04166 5.00002ZM6.66666 6.87502C6.32148 6.87502 6.04166 7.15485 6.04166 7.50002C6.04166 7.8452 6.32148 8.12502 6.66666 8.12502H13.3333C13.6785 8.12502 13.9583 7.8452 13.9583 7.50002C13.9583 7.15485 13.6785 6.87502 13.3333 6.87502H6.66666ZM6.04166 10C6.04166 10.3452 6.32148 10.625 6.66666 10.625H9.99999C10.3452 10.625 10.625 10.3452 10.625 10C10.625 9.65485 10.3452 9.37502 9.99999 9.37502H6.66666C6.32148 9.37502 6.04166 9.65485 6.04166 10ZM9.99999 16.6667C10.9205 16.6667 11.6667 15.9205 11.6667 15C11.6667 14.0795 10.9205 13.3334 9.99999 13.3334C9.07949 13.3334 8.33332 14.0795 8.33332 15C8.33332 15.9205 9.07949 16.6667 9.99999 16.6667Z" />
@@ -198,55 +243,19 @@
               <div class="header-right">
                 <!-- notification start -->
                 <div class="notification-box ml-15 d-none d-md-flex">
-                  <button class="dropdown-toggle" type="button" id="notification" data-bs-toggle="dropdown"
-                    aria-expanded="false">
+                  <button class="dropdown-toggle" type="button" id="notification" data-bs-toggle="dropdown" aria-expanded="false">
                     <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path
-                        d="M11 20.1667C9.88317 20.1667 8.88718 19.63 8.23901 18.7917H13.761C13.113 19.63 12.1169 20.1667 11 20.1667Z"
-                        fill="" />
-                      <path
-                        d="M10.1157 2.74999C10.1157 2.24374 10.5117 1.83333 11 1.83333C11.4883 1.83333 11.8842 2.24374 11.8842 2.74999V2.82604C14.3932 3.26245 16.3051 5.52474 16.3051 8.24999V14.287C16.3051 14.5301 16.3982 14.7633 16.564 14.9352L18.2029 16.6342C18.4814 16.9229 18.2842 17.4167 17.8903 17.4167H4.10961C3.71574 17.4167 3.5185 16.9229 3.797 16.6342L5.43589 14.9352C5.6017 14.7633 5.69485 14.5301 5.69485 14.287V8.24999C5.69485 5.52474 7.60672 3.26245 10.1157 2.82604V2.74999Z"
-                        fill="" />
+                      <path d="M11 20.1667C9.88317 20.1667 8.88718 19.63 8.23901 18.7917H13.761C13.113 19.63 12.1169 20.1667 11 20.1667Z" fill="" />
+                      <path d="M10.1157 2.74999C10.1157 2.24374 10.5117 1.83333 11 1.83333C11.4883 1.83333 11.8842 2.24374 11.8842 2.74999V2.82604C14.3932 3.26245 16.3051 5.52474 16.3051 8.24999V14.287C16.3051 14.5301 16.3982 14.7633 16.564 14.9352L18.2029 16.6342C18.4814 16.9229 18.2842 17.4167 17.8903 17.4167H4.10961C3.71574 17.4167 3.5185 16.9229 3.797 16.6342L5.43589 14.9352C5.6017 14.7633 5.69485 14.5301 5.69485 14.287V8.24999C5.69485 5.52474 7.60672 3.26245 10.1157 2.82604V2.74999Z" fill="" />
                     </svg>
                     <span></span>
                   </button>
                   <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notification">
                     <li>
-                      <a href="#0">
-                        <div class="image">
-                          <img src="assets/images/lead/lead-6.png" alt="" />
-                        </div>
+                      <a href="#">
                         <div class="content">
-                          <h6>
-                            John Doe
-                            <span class="text-regular">
-                              comment on a product.
-                            </span>
-                          </h6>
-                          <p>
-                            Lorem ipsum dolor sit amet, consect etur adipiscing
-                            elit Vivamus tortor.
-                          </p>
-                          <span>10 mins ago</span>
-                        </div>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#0">
-                        <div class="image">
-                          <img src="assets/images/lead/lead-1.png" alt="" />
-                        </div>
-                        <div class="content">
-                          <h6>
-                            Jonathon
-                            <span class="text-regular">
-                              like on a product.
-                            </span>
-                          </h6>
-                          <p>
-                            Lorem ipsum dolor sit amet, consect etur adipiscing
-                            elit Vivamus tortor.
-                          </p>
+                          <h6>System Alert <span class="text-regular">Maintenance</span></h6>
+                          <p>Lorem ipsum dolor sit amet.</p>
                           <span>10 mins ago</span>
                         </div>
                       </a>
@@ -254,64 +263,9 @@
                   </ul>
                 </div>
                 <!-- notification end -->
-                <!-- message start -->
-                <div class="header-message-box ml-15 d-none d-md-flex">
-                  <button class="dropdown-toggle" type="button" id="message" data-bs-toggle="dropdown"
-                    aria-expanded="false">
-                    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path
-                        d="M7.74866 5.97421C7.91444 5.96367 8.08162 5.95833 8.25005 5.95833C12.5532 5.95833 16.0417 9.4468 16.0417 13.75C16.0417 13.9184 16.0364 14.0856 16.0259 14.2514C16.3246 14.138 16.6127 14.003 16.8883 13.8482L19.2306 14.629C19.7858 14.8141 20.3141 14.2858 20.129 13.7306L19.3482 11.3882C19.8694 10.4604 20.1667 9.38996 20.1667 8.25C20.1667 4.70617 17.2939 1.83333 13.75 1.83333C11.0077 1.83333 8.66702 3.55376 7.74866 5.97421Z"
-                        fill="" />
-                      <path
-                        d="M14.6667 13.75C14.6667 17.2938 11.7939 20.1667 8.25004 20.1667C7.11011 20.1667 6.03962 19.8694 5.11182 19.3482L2.76946 20.129C2.21421 20.3141 1.68597 19.7858 1.87105 19.2306L2.65184 16.8882C2.13062 15.9604 1.83338 14.89 1.83338 13.75C1.83338 10.2062 4.70622 7.33333 8.25004 7.33333C11.7939 7.33333 14.6667 10.2062 14.6667 13.75ZM5.95838 13.75C5.95838 13.2437 5.54797 12.8333 5.04171 12.8333C4.53545 12.8333 4.12504 13.2437 4.12504 13.75C4.12504 14.2563 4.53545 14.6667 5.04171 14.6667C5.54797 14.6667 5.95838 14.2563 5.95838 13.75ZM9.16671 13.75C9.16671 13.2437 8.7563 12.8333 8.25004 12.8333C7.74379 12.8333 7.33338 13.2437 7.33338 13.75C7.33338 14.2563 7.74379 14.6667 8.25004 14.6667C8.7563 14.6667 9.16671 14.2563 9.16671 13.75ZM11.4584 14.6667C11.9647 14.6667 12.375 14.2563 12.375 13.75C12.375 13.2437 11.9647 12.8333 11.4584 12.8333C10.9521 12.8333 10.5417 13.2437 10.5417 13.75C10.5417 14.2563 10.9521 14.6667 11.4584 14.6667Z"
-                        fill="" />
-                    </svg>
-                    <span></span>
-                  </button>
-                  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="message">
-                    <li>
-                      <a href="#0">
-                        <div class="image">
-                          <img src="assets/images/lead/lead-5.png" alt="" />
-                        </div>
-                        <div class="content">
-                          <h6>Jacob Jones</h6>
-                          <p>Hey!I can across your profile and ...</p>
-                          <span>10 mins ago</span>
-                        </div>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#0">
-                        <div class="image">
-                          <img src="assets/images/lead/lead-3.png" alt="" />
-                        </div>
-                        <div class="content">
-                          <h6>John Doe</h6>
-                          <p>Would you mind please checking out</p>
-                          <span>12 mins ago</span>
-                        </div>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#0">
-                        <div class="image">
-                          <img src="assets/images/lead/lead-2.png" alt="" />
-                        </div>
-                        <div class="content">
-                          <h6>Anee Lee</h6>
-                          <p>Hey! are you available for freelance?</p>
-                          <span>1h ago</span>
-                        </div>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                <!-- message end -->
                 <!-- profile start -->
                 <div class="profile-box ml-15">
-                  <button class="dropdown-toggle bg-transparent border-0" type="button" id="profile"
-                    data-bs-toggle="dropdown" aria-expanded="false">
+                  <button class="dropdown-toggle bg-transparent border-0" type="button" id="profile" data-bs-toggle="dropdown" aria-expanded="false">
                     <div class="profile-info">
                       <div class="info">
                         <div class="image">
@@ -325,39 +279,10 @@
                     </div>
                   </button>
                   <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profile">
-                    <li>
-                      <div class="author-info flex items-center !p-1">
-                        <div class="image">
-                          <img src="assets/images/profile/profile-image.png" alt="image">
-                        </div>
-                        <div class="content">
-                          <h4 class="text-sm">Adam Joe</h4>
-                          <a class="text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white text-xs"
-                            href="#">Email@gmail.com</a>
-                        </div>
-                      </div>
-                    </li>
+                    <li><a href="#"><i class="lni lni-user"></i> View Profile</a></li>
+                    <li><a href="#"><i class="lni lni-cog"></i> Settings</a></li>
                     <li class="divider"></li>
-                    <li>
-                      <a href="#0">
-                        <i class="lni lni-user"></i> View Profile
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#0">
-                        <i class="lni lni-alarm"></i> Notifications
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#0"> <i class="lni lni-inbox"></i> Messages </a>
-                    </li>
-                    <li>
-                      <a href="#0"> <i class="lni lni-cog"></i> Settings </a>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                      <a href="#0"> <i class="lni lni-exit"></i> Sign Out </a>
-                    </li>
+                    <li><a href="signout.html"> <i class="lni lni-exit"></i> Sign Out </a></li>
                   </ul>
                 </div>
                 <!-- profile end -->
@@ -368,7 +293,7 @@
       </header>
       <!-- ========== header end ========== -->
 
-      <!-- ========== signin-section start ========== -->
+      <!-- ========== signout-section start ========== -->
       <section class="signin-section">
         <div class="container-fluid">
           <!-- ========== title-wrapper start ========== -->
@@ -376,28 +301,21 @@
             <div class="row align-items-center">
               <div class="col-md-6">
                 <div class="title">
-                  <h2>Sign in</h2>
+                  <h2>Sign Out</h2>
                 </div>
               </div>
-              <!-- end col -->
               <div class="col-md-6">
                 <div class="breadcrumb-wrapper">
                   <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                      <li class="breadcrumb-item">
-                        <a href="{{ url('/page') }}">Dashboard</a>
-                      </li>
-                      <li class="breadcrumb-item"><a href="{{ url('/auth') }}">Auth</a></li>
-                      <li class="breadcrumb-item active" aria-current="page">
-                        Sign in
-                      </li>
+                      <li class="breadcrumb-item"><a href="{{ url('/dashboard') }}">Dashboard</a></li>
+                      <li class="breadcrumb-item"><a href="{{ url('/auth') }}  ">Auth</a></li>
+                      <li class="breadcrumb-item active" aria-current="page">Sign Out</li>
                     </ol>
                   </nav>
                 </div>
               </div>
-              <!-- end col -->
             </div>
-            <!-- end row -->
           </div>
           <!-- ========== title-wrapper end ========== -->
 
@@ -406,12 +324,13 @@
               <div class="auth-cover-wrapper bg-primary-100">
                 <div class="auth-cover">
                   <div class="title text-center">
-                    <h1 class="text-primary mb-10">Welcome Back</h1>
+                    <h1 class="text-primary mb-10">See You Again!</h1>
                     <p class="text-medium">
-                      Sign in to your Existing account to continue
+                      Thank you for using PlainAdmin Dashboard.
                     </p>
                   </div>
                   <div class="cover-image">
+                    <!-- Menggunakan gambar yang sama agar konsisten -->
                     <img src="assets/images/auth/signin-image.svg" alt="" />
                   </div>
                   <div class="shape-image">
@@ -424,76 +343,63 @@
             <div class="col-lg-6">
               <div class="signin-wrapper">
                 <div class="form-wrapper">
-                  <h6 class="mb-15">Sign In Form</h6>
-                  <p class="text-sm mb-25">
-                    Start creating the best possible user experience for you
-                    customers.
-                  </p>
-                  <form action="{{ route('login') }}" method="POST">
-                    @csrf
-                    <div class="row">
-                      <div class="col-12">
-                        <div class="input-style-1">
-                          <label>Email</label>
-                          <input type="email" name="email" placeholder="Email" />
-                          @error('email') <!-- Menampilkan pesan jika email/pass salah -->
-            <small class="text-danger">{{ $message }}</small>
-        @enderror
-                        </div>
+                  
+                  <!-- Logout Confirmation UI -->
+                  <div class="logout-wrapper">
+                    <div class="logout-icon-wrapper">
+                      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M16 17V19C16 19.5304 15.7893 20.0391 15.4142 20.4142C15.0391 20.7893 14.5304 21 14 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H14C14.5304 3 15.0391 3.21071 15.4142 3.58579C15.7893 3.96086 16 4.46957 16 5V7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8 12H21M21 12L18 9M21 12L18 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </div>
+                    
+                    <h6 class="text-center mb-10 text-danger fw-bold">Ready to Leave?</h6>
+                    
+                    <!-- Form Logout -->
+<div id="logout-form-content">
+  <p class="text-sm mb-25 text-center text-gray">
+    Select "Logout" below if you are ready to end your current session.
+  </p>
+  
+  <div class="button-group d-flex justify-content-center flex-wrap">
+    <!-- Tombol Cancel: Arahkan ke Dashboard/Home -->
+    <a href="{{ url('/') }}" class="main-btn primary-btn-outline m-2" style="text-decoration: none; display: flex; align-items: center;">
+      Cancel
+    </a>
+    
+    <!-- Tombol Logout: Harus dibungkus Form agar bisa POST ke Laravel -->
+    <form action="{{ route('logout') }}" method="POST">
+      @csrf
+      <button type="submit" class="main-btn danger-btn m-2">
+        Logout
+      </button>
+    </form>
+  </div>
+</div>
+
+                    <!-- Pesan Sukses Loading -->
+                    <div id="logout-loading" class="text-center d-none">
+                      <div class="loading-spinner text-danger mx-auto" style="display:block; width: 3rem; height: 3rem;"></div>
+                      <p class="mt-3 text-medium">Logging out...</p>
+                    </div>
+
+                    <!-- Pesan Sukses Final -->
+                    <div id="logout-success" class="logout-success-msg">
+                      <div class="mb-3">
+                         <i class="lni lni-check-circle text-success" style="font-size: 3rem;"></i>
                       </div>
-                      <!-- end col -->
-                      <div class="col-12">
-                        <div class="input-style-1">
-                          <label>Password</label>
-                          <input type="password" name="password" placeholder="Password" />
-                        </div>
-                      </div>
-                      <!-- end col -->
-                      <div class="col-xxl-6 col-lg-12 col-md-6">
-                        <div class="form-check checkbox-style mb-30">
-                          <input class="form-check-input" type="checkbox" value="" id="checkbox-remember" />
-                          <label class="form-check-label" for="checkbox-remember">
-                            Remember me next time</label>
-                        </div>
-                      </div>
-                      <!-- end col -->
-                      <div class="col-xxl-6 col-lg-12 col-md-6">
-                        <div class="text-start text-md-end text-lg-start text-xxl-end mb-30">
-                          <a href="reset-password.html" class="hover-underline">
-                            Forgot Password?
-                          </a>
-                        </div>
-                      </div>
-                      <!-- end col -->
-                      <div class="col-12">
-                        <div class="button-group d-flex justify-content-center flex-wrap">
-                          <button class="main-btn primary-btn btn-hover w-100 text-center">
-                            Sign In
-                          </button>
-                        </div>
+                      <h5 class="text-success mb-2">You have been logged out.</h5>
+                      <p class="text-sm text-gray">Redirecting to login page...</p>
+                      <div class="mt-4">
+                        <a href="{{ route('login') }}" class="main-btn primary-btn btn-hover">
+                          Back to Login
+                        </a>
                       </div>
                     </div>
-                    <!-- end row -->
-                  </form>
-                  <div class="singin-option pt-40">
-                    <p class="text-sm text-medium text-center text-gray">
-                      Easy Sign In With
-                    </p>
-                    <div class="button-group pt-40 pb-40 d-flex justify-content-center flex-wrap">
-                      <button class="main-btn primary-btn-outline m-2">
-                        <i class="lni lni-facebook-fill mr-10"></i>
-                        Facebook
-                      </button>
-                      <button class="main-btn danger-btn-outline m-2">
-                        <i class="lni lni-google mr-10"></i>
-                        Google
-                      </button>
-                    </div>
-                    <p class="text-sm text-medium text-dark text-center">
-                      Dont have any account yet?
-                      <a href="signup.html">Create an account</a>
-                    </p>
+
                   </div>
+                  <!-- End Logout Confirmation UI -->
+
                 </div>
               </div>
             </div>
@@ -502,7 +408,7 @@
           <!-- end row -->
         </div>
       </section>
-      <!-- ========== signin-section end ========== -->
+      <!-- ========== signout-section end ========== -->
 
       <!-- ========== footer start =========== -->
       <footer class="footer">
@@ -518,17 +424,14 @@
                 </p>
               </div>
             </div>
-            <!-- end col-->
             <div class="col-md-6">
               <div class="terms d-flex justify-content-center justify-content-md-end">
-                <a href="#0" class="text-sm">Term & Conditions</a>
-                <a href="#0" class="text-sm ml-15">Privacy & Policy</a>
+                <a href="#" class="text-sm">Term & Conditions</a>
+                <a href="#" class="text-sm ml-15">Privacy & Policy</a>
               </div>
             </div>
           </div>
-          <!-- end row -->
         </div>
-        <!-- end container -->
       </footer>
       <!-- ========== footer end =========== -->
     </main>
@@ -545,5 +448,35 @@
 <script src="{{ asset('assets/js/polyfill.js') }}"></script>
 <script src="{{ asset('assets/js/main.js') }}"></script>
 
+    <!-- Custom Logout Script -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const logoutBtn = document.getElementById('btn-logout');
+        const formContent = document.getElementById('logout-form-content');
+        const loadingContent = document.getElementById('logout-loading');
+        const successContent = document.getElementById('logout-success');
+
+        logoutBtn.addEventListener('click', function(e) {
+          e.preventDefault(); // Mencegah reload halaman standar
+
+          // 1. Sembunyikan form tombol
+          formContent.style.display = 'none';
+          
+          // 2. Tampilkan Loading
+          loadingContent.classList.remove('d-none');
+          loadingContent.classList.add('d-block');
+
+          // 3. Simulasi proses backend (1.5 detik)
+          setTimeout(function() {
+            // Sembunyikan loading
+            loadingContent.classList.remove('d-block');
+            loadingContent.classList.add('d-none');
+
+            // Tampilkan pesan sukses
+            successContent.style.display = 'block';
+          }, 1500);
+        });
+      });
+    </script>
   </body>
 </html>
