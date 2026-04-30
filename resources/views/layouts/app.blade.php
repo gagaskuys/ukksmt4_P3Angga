@@ -56,6 +56,7 @@
     {{-- Menampilkan Role Aktif (Opsional, bisa dihapus jika sudah yakin) --}}
     @auth
         <li class="nav-item">
+          <!-- memcunculkan role aktif di sidebar, jadi user bisa langsung tau dia login sebagai apa. -->
             <p class="text-sm px-3 py-2 text-gray">Role: {{ auth()->user()->getRoleNames()->first() }}</p>
         </li>
     @endauth

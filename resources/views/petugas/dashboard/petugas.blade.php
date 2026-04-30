@@ -1,5 +1,7 @@
 @extends('layouts.app')
 @section('content')
+<!-- fitur dashboard petugas masih kosong, nanti bisa ditambahkan grafik atau informasi penting 
+lainnya yang berkaitan dengan tugas petugas. -->
 <div class="container-fluid">
     <div class="title-wrapper pt-30">
         <h2>Dashboard Petugas</h2>

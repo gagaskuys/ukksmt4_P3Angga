@@ -1,5 +1,7 @@
 @extends('layouts.app')
 @section('content')
+<!-- fitur dashboard kepala sekolah, menampilkan informasi dan statistik terkait 
+aspirasi yang telah diselesaikan. -->
 <div class="container-fluid">
     <div class="title-wrapper pt-30">
         <h2>Dashboard Kepala Sekolah</h2>

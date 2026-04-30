@@ -44,4 +44,8 @@ use HasFactory, Notifiable, HasRoles;
             'password' => 'hashed',
         ];
     }
+    public function siswa() {
+    return $this->hasOne(Siswa::class);
+}
+
 }

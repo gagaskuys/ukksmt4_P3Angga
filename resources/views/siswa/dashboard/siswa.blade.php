@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+<!-- fitur dashboard siswa, menampilkan informasi dan statistik terkait aspirasi yang telah diajukan. -->
 <div class="container-fluid">
     <div class="title-wrapper pt-30">
         <h2>Dashboard Siswa</h2>
@@ -10,8 +11,8 @@
             <div class="icon-card mb-30">
                 <div class="icon success"><i class="lni lni-checkmark-circle"></i></div>
                 <div class="content">
-                    <h6 class="mb-10">Aspirasi Saya</h6>
-                    <h3 class="text-bold mb-10">0</h3>
+                    <h6 class="mb-10" >Aspirasi Saya</h6>
+                    <h3 class="text-bold mb-10">{{ $totalAspirasiSaya }}</h3>
                     <p class="text-sm">Total pengajuan Anda</p>
                 </div>
             </div>

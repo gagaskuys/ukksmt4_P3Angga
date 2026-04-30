@@ -1,5 +1,7 @@
 @extends('layouts.app')
 @section('content')
+<!-- fitur dashboard guru, menampilkan informasi dan statistik 
+terkait aspirasi yang masuk dan perlu diverifikasi. -->
 <div class="container-fluid">
     <div class="title-wrapper pt-30">
         <h2>Dashboard Guru</h2>
