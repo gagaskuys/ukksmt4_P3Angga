@@ -72,12 +72,28 @@
     {{-- 2. MENU KHUSUS ADMIN (Nomor 9-15 di tabelmu) --}}
     @role('admin')
     <li class="nav-item">
-        <a href="{{ url('/siswa') }}">
+        <a href="{{ route('admin.siswa.index') }}">
             <span class="text">Kelola Data Siswa</span>
         </a>
     </li>
     <li class="nav-item">
-        <a href="{{ url('/guru') }}">
+        <a href="{{ url('/aspirasi/monitoring') }}">
+            <span class="text">Kelola Aspirasi Siswa</span>
+        </a>
+    </li>
+        <li class="nav-item">
+        <a href="{{ route('admin.kategori.index') }}">
+            <span class="text">Kelola Kategori Aspirasi</span>
+        </a>
+    </li>
+        <li class="nav-item">
+        <a href="{{ route('admin.ruangan.index') }}">
+            <span class="text">Kelola Lokasi / Ruangan</span>
+        </a>
+    </li>
+    
+    <li class="nav-item">
+        <a href="{{ route('admin.guru.index') }}">
             <span class="text">Kelola Data Guru</span>
         </a>
     </li>
@@ -86,7 +102,7 @@
     {{-- 3. MENU KHUSUS SISWA (Nomor 16-18 di tabelmu) --}}
     @role('siswa')
     <li class="nav-item">
-        <a href="{{ url('/aspirasi/input') }}">
+        <a href="{{ route('siswa.create') }}">
             <span class="text">Input Aspirasi</span>
         </a>
     </li>

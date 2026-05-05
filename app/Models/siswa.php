@@ -2,9 +2,34 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model; // Gunakan Model biasa, bukan Authenticatable jika login pakai tabel users
 
-class siswa extends Model
+class Siswa extends Model
 {
-    //
+    use HasFactory;
+
+    protected $table = 'siswas';
+
+    // Sesuaikan dengan phpMyAdmin kamu yang kolomnya cuma 'id'
+    protected $primaryKey = 'id'; 
+
+    // Kolom ini harus SAMA PERSIS dengan yang ada di phpMyAdmin kamu
+    protected $fillable = [
+        'user_id',
+        'name',
+        'nis',
+        'kelas_id',
+        'jurusan_id',
+        'jenis_kelamin',
+        'tanggal_lahir',
+        'alamat',
+        'no_telepon',
+        'foto'
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

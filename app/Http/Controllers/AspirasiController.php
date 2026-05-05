@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Aspirasi;
 use App\Models\Kategori; // Tambahkan ini jika butuh list kategori di form
 use App\Models\Ruangan;  // Tambahkan ini jika butuh list ruangan di form
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,16 +14,18 @@ class AspirasiController extends Controller
     /**
      * Menampilkan Form Input Aspirasi (No. 16)
      */
-    public function create()
-    {
-        // Jika form kamu butuh data kategori/ruangan dari database, ambil di sini:
-        $kategoris = Kategori::all();
-        $ruangans = Ruangan::all();
+    // Di AspirasiController.php
+public function create()
+{
+    // Ambil semua data kategori
+    $kategoris = \App\Models\Kategori::all();
+    
+    // Ambil semua data ruangan
+    $ruangans = \App\Models\Ruangan::all();
 
-        // Mengarah ke resources/views/siswa/create.blade.php
-        return view('siswa.create', compact('kategoris', 'ruangans')); 
-    }
-
+    // Kirim ke tampilan
+    return view('siswa.create', compact('kategoris', 'ruangans'));
+}
     /**
      * Menyimpan Data Aspirasi (No. 16)
      */
@@ -78,10 +81,27 @@ class AspirasiController extends Controller
      * Menampilkan Monitoring Aspirasi untuk Admin/Guru/Kepsek (No. 19)
      */
     public function index()
-    {
-        // Ambil semua aspirasi untuk dipantau petugas
-        $aspirasis = Aspirasi::with(['siswa', 'kategori', 'ruangan'])->latest()->get();
-        
-        return view('aspirasi.monitoring', compact('aspirasis'));
-    }
+{
+    // 1. Ambil data untuk tabel
+    $aspirasis = Aspirasi::with(['siswa', 'kategori', 'ruangan'])->latest()->get();
+
+    // 2. Ambil data statistik per kategori
+    // Kita kelompokkan berdasarkan kategori_id dan hitung jumlahnya
+    $statistikKategori = Aspirasi::with('kategori')
+        ->select('kategori_id', DB::raw('count(*) as total'))
+        ->groupBy('kategori_id')
+        ->get();
+
+    return view('aspirasi.monitoring', compact('aspirasis', 'statistikKategori'));
+}
+
+    public function lihatSemua()
+{
+    // Mengambil semua data aspirasi
+    $aspirasis = Aspirasi::with(['siswa', 'kategori', 'ruangan'])->latest()->get();
+    
+    // Mengarah ke file view yang kamu inginkan (misal: aspirasi/index.blade.php)
+    return view('aspirasi.index', compact('aspirasis'));
+}
+
 }
