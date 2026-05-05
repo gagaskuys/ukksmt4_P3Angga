@@ -34,7 +34,8 @@ class LoginController extends Controller
         
         if ($user->hasRole('siswa')) {
             // Kita arahkan ke dashboard siswa dulu baru dia bisa pilih menu input
-            return redirect()->intended('/siswa/dashboard'); 
+            return redirect()->intended(route('siswa.create')); // Arahkan ke form input aspirasi, bukan dashboard --- IGNORE ---
+             // return redirect()->intended('/siswa/dashboard'); --- IGNORE ---
         } 
         
         if ($user->hasRole('petugas')) {

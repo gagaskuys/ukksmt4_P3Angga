@@ -75,7 +75,7 @@
 
             <div class="mt-4">
                 <button type="submit" class="main-btn primary-btn btn-hover">Kirim Aspirasi</button>
-                <a href="{{ route('siswa.dashboard') }}" class="main-btn secondary-btn btn-hover ms-2">Batal</a>
+                <a href="{{ route('siswa.dashboard.siswa') }}" class="main-btn secondary-btn btn-hover ms-2">Batal</a>
             </div>
         </form>
     </div>

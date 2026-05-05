@@ -7,6 +7,7 @@
     use App\Http\Controllers\PetugasController;
     use App\Http\Controllers\KepsekController;
     use App\Http\Controllers\AspirasiController;
+    use App\Http\Controllers\DashboardSiswaController;
     use App\Http\Controllers\KategoriController;
     use App\Http\Controllers\RuanganController;
     use App\Http\Controllers\Auth\LoginController;
@@ -47,13 +48,15 @@ Route::middleware(['role:admin'])->prefix('admin')->name('admin.')->group(functi
 
 
     // --- FITUR KHUSUS SISWA ---
-    Route::middleware(['role:siswa'])->group(function () { // Hapus prefix('siswa')
+Route::middleware(['role:siswa'])->group(function () {
+    // Arahkan ke DashboardSiswaController, bukan SiswaController (admin)
+    Route::get('/siswa/dashboard', [DashboardSiswaController::class, 'index'])->name('siswa.dashboard.siswa');
+    
     Route::get('/aspirasi/input', [AspirasiController::class, 'create'])->name('siswa.create');
-        // Pastikan diarahkan ke SiswaController, bukan AdminController
-        Route::get('/dashboard', [SiswaController::class, 'index'])->name('siswa.dashboard');
-        Route::post('/aspirasi/simpan', [AspirasiController::class, 'store'])->name('aspirasi.store');
-        Route::get('/aspirasi/histori', [AspirasiController::class, 'history'])->name('aspirasi.history');
-    });
+    Route::post('/aspirasi/simpan', [AspirasiController::class, 'store'])->name('aspirasi.store');
+    Route::get('/aspirasi/histori', [AspirasiController::class, 'history'])->name('aspirasi.history');
+});
+
 
         // --- FITUR MONITORING (Admin, Guru, Petugas, Kepsek) ---
         Route::middleware(['role:admin|guru|petugas|kepsek'])->group(function () {
