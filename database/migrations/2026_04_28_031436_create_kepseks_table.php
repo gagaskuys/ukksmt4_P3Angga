@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('name', 100);
             $table->enum('jenis_kelamin', ['L', 'P']);
             $table->string('no_hp', 15);
-            $table->string('foto', 255)->nullable(); // Menyimpan path foto kepala sekolah, bisa nullable jika tidak wajib
-            $table->timestamps();
+            $table->timestamps('created_at')->useCurrent();
+            $table->timestamps('updated_at')->useCurrentOnUpdate();
         });
     }
 

@@ -34,6 +34,8 @@
                     <tr>
                         <th><h6>No</h6></th>
                         <th><h6>Nama Kategori</h6></th>
+                        <th><h6>Dibuat Pada</h6></th>
+                        <th><h6>Diupdate Pada</h6></th>
                         <th><h6>Aksi</h6></th>
                     </tr>
                 </thead>
@@ -42,6 +44,8 @@
     <tr>
         <td>{{ $key + 1 }}</td>
         <td>{{ $kat->nama_kategori }}</td>
+        <td>{{ optional($kat->created_at)->format('d-m-Y') }}</td>
+        <td>{{ optional($kat->updated_at)->format('d-m-Y') }}</td>
         <td>
             {{-- Bagian ini yang krusial, pastikan ada $kat->id --}}
             <form action="{{ route('kategori.destroy', ['kategori' => $kat->id_kategori]) }}" method="POST">
@@ -56,7 +60,7 @@
     </tr>
     @empty
     <tr>
-        <td colspan="3" class="text-center">Belum ada data kategori.</td>
+        <td colspan="5" class="text-center">Belum ada data kategori.</td>
     </tr>
     @endforelse
 </tbody>

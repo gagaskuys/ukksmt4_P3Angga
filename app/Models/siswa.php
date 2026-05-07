@@ -25,7 +25,8 @@ class Siswa extends Model
         'tanggal_lahir',
         'alamat',
         'no_telepon',
-        'foto'
+        'created_at',
+        'updated_at'
     ];
 
     public function user()

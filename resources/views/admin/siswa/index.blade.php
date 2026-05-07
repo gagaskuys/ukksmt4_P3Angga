@@ -29,7 +29,9 @@
                     <tr>
                         <th><h6>No</h6></th>
                         <th><h6>Nama Lengkap</h6></th>
-                        <th><h6>Alamat Surel</h6></th>
+                        <th><h6>Alamat email</h6></th>
+                        <th><h6>Dibuat Pada</h6></th>
+                        <th><h6>Diupdate Pada</h6></th>
                         <th><h6>Aksi</h6></th>
                     </tr>
                 </thead>
@@ -39,6 +41,8 @@
                         <td>{{ $key + 1 }}</td>
                         <td>{{ $siswa->nama }}</td>
                         <td>{{ $siswa->email }}</td>
+                        <td>{{ optional($siswa->created_at)->format('d-m-Y') }}</td>
+                        <td>{{ optional($siswa->updated_at)->format('d-m-Y') }}</td>
                         <td>
                             <a href="{{ route('admin.siswa.edit', $siswa->id) }}" class="text-primary me-3">
                                 <i class="lni lni-pencil"></i> Ubah
@@ -54,7 +58,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="4" class="text-center">Belum ada data siswa.</td>
+                        <td colspan="6" class="text-center">Belum ada data siswa.</td>
                     </tr>
                     @endforelse
                 </tbody>

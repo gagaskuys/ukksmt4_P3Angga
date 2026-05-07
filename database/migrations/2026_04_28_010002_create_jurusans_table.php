@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('jurusans', function (Blueprint $table) {
             $table->id();
             $table->string('nama_jurusan', 50); // Nama jurusan, misalnya "IPA", "IPS", "Bahasa", dll.
-            $table->timestamps();
+            $table->timestamps('created_at')->useCurrent();
+            $table->timestamps('updated_at')->useCurrentOnUpdate();
         });
     }
 

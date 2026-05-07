@@ -6,5 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Kepsek extends Model
 {
-    //
+    protected $table = 'kepseks';
+    protected $fillable = [
+        'nama_kepsek',
+        'email',
+        'password',
+    ];
+
+
 }

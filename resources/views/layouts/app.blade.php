@@ -52,15 +52,6 @@
             </a>
 </a>
 <ul id="ddmenu_1" class="collapse show dropdown-nav">
-    
-    {{-- Menampilkan Role Aktif (Opsional, bisa dihapus jika sudah yakin) --}}
-    @auth
-        <li class="nav-item">
-          <!-- memcunculkan role aktif di sidebar, jadi user bisa langsung tau dia login sebagai apa. -->
-            <p class="text-sm px-3 py-2 text-gray">Role: {{ auth()->user()->getRoleNames()->first() }}</p>
-        </li>
-    @endauth
-
     {{-- 1. MENU DASHBOARD UTAMA (Bisa diakses semua Role) --}}
     {{-- Karena rutenya satu, tapi isinya otomatis berubah sesuai role di Controller --}}
     <li class="nav-item">
@@ -86,7 +77,17 @@
             <span class="text">Kelola Kategori Aspirasi</span>
         </a>
     </li>
-        <li class="nav-item">
+    <li class="nav-item">
+        <a href="{{ route('admin.kelas.index') }}">
+            <span class="text">Kelola Data Kelas</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a href="{{ route('admin.jurusan.index') }}">
+            <span class="text">Kelola Data Jurusan</span>
+        </a>
+    </li>
+    <li class="nav-item">
         <a href="{{ route('admin.ruangan.index') }}">
             <span class="text">Kelola Lokasi / Ruangan</span>
         </a>
@@ -379,8 +380,9 @@
                           <img src="assets/images/profile/profile-image.png" alt="" />
                         </div>
                         <div>
-                          <h6 class="fw-500">Adam Joe</h6>
-                          <p>Admin</p>
+                          {{-- Menampilkan Role Aktif (Opsional, bisa dihapus jika sudah yakin) --}}
+                          <h6 class="fw-500">{{ auth()->user()->name }}</h6>
+                          <p>Role: {{ auth()->user()->getRoleNames()->first() }}</p>
                         </div>
                       </div>
                     </div>
@@ -392,8 +394,8 @@
                           <img src="assets/images/profile/profile-image.png" alt="image">
                         </div>
                         <div class="content">
-                          <h4 class="text-sm">Adam Joe</h4>
-                          <a class="text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white text-xs" href="#">Email@gmail.com</a>
+                          <h4 class="text-sm">{{ auth()->user()->name }}</h4>
+                          <a class="text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white text-xs" href="#">{{ auth()->user()->email }}</a>
                         </div>
                       </div>
                     </li>
