@@ -68,8 +68,6 @@ class SiswaController extends Controller
             'tanggal_lahir' => $request->tanggal_lahir,
             'alamat' => $request->alamat,
             'no_telepon' => $request->no_telepon,
-            'created_at' => now(),
-            'updated_at' => now(),
         ]);
     });
 
@@ -113,6 +111,8 @@ class SiswaController extends Controller
             $siswa->update([
                 'name' => $request->nama,
                 'nis' => $request->nis ?? $siswa->nis,
+                'created_at' => $request->created_at,
+                'updated_at' => $request->updated_at,   
             ]);
         });
 

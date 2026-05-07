@@ -13,5 +13,5 @@ class Kepsek extends Model
         'password',
     ];
 
-
+    public $timestamps = true; // Tetap aktifkan timestamps agar bisa diisi manual
 }

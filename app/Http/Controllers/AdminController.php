@@ -30,7 +30,7 @@ class AdminController extends Controller
         // 3. Logika untuk SISWA (Nomor 6)
         if ($user->hasRole('siswa')) {
             $totalAspirasiSaya = \App\Models\Aspirasi::where('siswa_id', $user->id)->count();
-            return view('siswa.dashboard.siswa', compact('totalAspirasiSaya'));
+            return view('siswa.create', compact('totalAspirasiSaya'));
         }
 
         // 4. Logika untuk PETUGAS (Nomor 7)

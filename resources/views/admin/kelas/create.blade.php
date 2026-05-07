@@ -12,6 +12,8 @@
                 <label>Nama Kelas</label>
                 <input type="text" name="nama_kelas" placeholder="Masukkan nama kelas" required>
             </div>
+            <div class="text-end">
+                    <a href="{{ route('admin.kelas.index') }}" class="main-btn danger-btn-outline btn-hover">Batal</a>
             <button type="submit" class="main-btn success-btn rounded-md btn-hover">Simpan</button>
         </form>
     </div>

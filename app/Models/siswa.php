@@ -25,9 +25,9 @@ class Siswa extends Model
         'tanggal_lahir',
         'alamat',
         'no_telepon',
-        'created_at',
-        'updated_at'
     ];
+
+    public $timestamps = true; // Tetap aktifkan timestamps agar bisa diisi manual
 
     public function user()
     {

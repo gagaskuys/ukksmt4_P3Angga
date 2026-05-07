@@ -19,4 +19,5 @@ protected $fillable = ['nama_ruangan', 'lokasi'];
     {
         return $this->hasMany(Aspirasi::class, 'ruangan_id');
     }
+    public $timestamps = true; // Tetap aktifkan timestamps agar bisa diisi manual
 }

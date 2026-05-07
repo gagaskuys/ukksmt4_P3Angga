@@ -11,4 +11,5 @@ class Jurusan extends Model
     protected $fillable = [
         'nama_jurusan',
     ];
+    public $timestamps = true; // Tetap aktifkan timestamps agar bisa diisi manual
 }

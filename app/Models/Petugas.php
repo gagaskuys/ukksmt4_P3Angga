@@ -12,4 +12,5 @@ class Petugas extends Model
         'email',
         'password',
     ];
+    public $timestamps = true; // Tetap aktifkan timestamps agar bisa diisi manual
 }

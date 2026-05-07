@@ -25,4 +25,5 @@ class Kategori extends Model
     {
         return $this->hasMany(Aspirasi::class, 'kategori_id');
     }
+    public $timestamps = true; // Tetap aktifkan timestamps agar bisa diisi manual
 }

@@ -16,4 +16,5 @@ class Kelas extends Model
     {
         return $this->hasMany(Aspirasi::class, 'kelas_id');
     }
+    public $timestamps = true; // Tetap aktifkan timestamps agar bisa diisi manual
 }

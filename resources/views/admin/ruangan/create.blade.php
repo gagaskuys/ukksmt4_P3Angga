@@ -16,6 +16,8 @@
                 <label>Lokasi</label>
                 <input type="text" name="lokasi" placeholder="Masukkan lokasi ruangan" required>
             </div>
+                <div class="text-end">
+                    <a href="{{ route('admin.ruangan.index') }}" class="main-btn danger-btn-outline btn-hover">Batal</a>
             <button type="submit" class="main-btn success-btn rounded-md btn-hover">Simpan</button>
         </form>
     </div>

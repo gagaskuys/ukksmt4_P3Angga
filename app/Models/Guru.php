@@ -20,4 +20,5 @@ class Guru extends Model
         'no_hp',
         'alamat'
     ];
+    public $timestamps = true; // Tetap aktifkan timestamps agar bisa diisi manual
 }
