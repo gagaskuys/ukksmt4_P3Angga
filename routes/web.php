@@ -62,16 +62,16 @@ Route::middleware(['auth'])->group(function () {
     });
 
     // --- DASHBOARD ROLE LAIN ---
-    Route::middleware(['role:guru'])->prefix('guru')->group(function () {
-        Route::get('/guru/dashboard', [GuruController::class, 'index'])->name('guru.dashboard.guru');
-    });
+    // Route::middleware(['role:guru'])->prefix('guru')->group(function () {
+    //     Route::get('/dashboard', [GuruController::class, 'index'])->name('guru.dashboard');
+    // });
 
     Route::middleware(['role:petugas'])->prefix('petugas')->group(function () {
-        Route::get('/petugas/dashboard', [PetugasController::class, 'index'])->name('petugas.dashboard.petugas');
+        Route::get('/dashboard', [PetugasController::class, 'index'])->name('petugas.dashboard');
     });
 
     Route::middleware(['role:kepsek'])->prefix('kepsek')->group(function () {
-        Route::get('/kepsek/dashboard', [KepsekController::class, 'index'])->name('kepsek.dashboard.kepsek');
+        Route::get('/dashboard', [KepsekController::class, 'index'])->name('kepsek.dashboard');
     });
 
 });

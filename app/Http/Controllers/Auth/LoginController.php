@@ -27,9 +27,9 @@ class LoginController extends Controller
         if ($user->hasRole('admin')) {
             return redirect()->intended('/admin/dashboard');
         } 
-        
+        //guru lsngsung melihat semua aspirasi siswa
         if ($user->hasRole('guru')) {
-            return redirect()->intended('/guru/dashboard');
+            return redirect()->intended(route('aspirasi.lihat'));
         } 
         
         if ($user->hasRole('siswa')) {

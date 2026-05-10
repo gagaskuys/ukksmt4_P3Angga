@@ -94,7 +94,7 @@
     </li>
     
     <li class="nav-item">
-        <a href="{{ route('admin.guru.index') }}">
+        <a href="{{ route('guru.dashboard.index') }}">
             <span class="text">Kelola Data Guru</span>
         </a>
     </li>
