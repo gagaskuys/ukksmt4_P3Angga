@@ -17,14 +17,16 @@ class AdminController extends Controller
         if ($user->hasRole('admin')) {
             $totalSiswa = User::role('siswa')->count();
             $totalGuru = User::role('guru')->count();
-            $totalAspirasi = 0; // Nanti diisi jika tabel aspirasi sudah ada
+            $totalKepsek = User::role('kepsek')->count();
+            $totalPetugas = User::role('petugas')->count();
+            $totalAspirasi = \App\Models\Aspirasi::count(); // Nanti diisi jika tabel aspirasi sudah ada
 
-            return view('admin.dashboard.admin', compact('totalSiswa', 'totalGuru', 'totalAspirasi'));
+            return view('admin.dashboard.admin', compact('totalSiswa', 'totalGuru', 'totalKepsek', 'totalPetugas',  'totalAspirasi'));
         } 
         
         // 2. Logika untuk GURU (Nomor 5)
         if ($user->hasRole('guru')) {
-            return view('guru.dashboard.guru');
+            return view('admin.guru.index');
         } 
 
         // 3. Logika untuk SISWA (Nomor 6)
@@ -35,12 +37,12 @@ class AdminController extends Controller
 
         // 4. Logika untuk PETUGAS (Nomor 7)
         if ($user->hasRole('petugas')) {
-            return view('petugas.dashboard.petugas');
+            return view('admin.petugas.index');
         }
 
         // 5. Logika untuk KEPSEK (Nomor 8)
         if ($user->hasRole('kepsek')) {
-            return view('kepsek.dashboard.kepsek');
+            return view('admin.kepsek.index');
         }
 
         // Jika user login tapi tidak punya role di atas

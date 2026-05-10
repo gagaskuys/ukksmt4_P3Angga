@@ -13,11 +13,11 @@ class GuruController extends Controller
         $gurus = Guru::latest()->get();
 
         // Kirim variabel $gurus ke tampilan
-        return view('guru.dashboard.index', compact('gurus'));
+        return view('admin.guru.index', compact('gurus'));
     }
     public function create()
     {
-        return view('guru.create');
+        return view('admin.guru.create');
     }
     public function store(Request $request)
     {
@@ -42,14 +42,14 @@ class GuruController extends Controller
         ]);
 
         // Redirect ke halaman daftar guru        return redirect()->route('guru.dashboard')->with('success', 'Data guru berhasil disimpan.');
-        return redirect()->route('guru.dashboard')->with('success', 'Data guru berhasil disimpan.');
+        return redirect()->route('admin.guru.index')->with('success', 'Data guru berhasil disimpan.');
 
     }
 
     public function edit($id)
     {
-        $guru = Guru::findOrFail($id);
-        return view('guru.edit', compact('guru'));
+        $gurus = Guru::findOrFail($id);
+        return view('admin.guru.edit', compact('gurus'));
     }
     public function update(Request $request, $id)
     {
@@ -64,28 +64,28 @@ class GuruController extends Controller
         ]);
 
         // Temukan guru berdasarkan ID
-        $guru = Guru::findOrFail($id);
+        $gurus = Guru::findOrFail($id);
 
         // Update data guru
-        $guru->nama_guru = $request->nama_guru;
-        $guru->nip = $request->nip;
-        $guru->email = $request->email;
+        $gurus->nama_guru = $request->nama_guru;
+        $gurus->nip = $request->nip;
+        $gurus->email = $request->email;
         if ($request->password) {
-            $guru->password = bcrypt($request->password); // Enkripsi password jika diubah
+            $gurus->password = bcrypt($request->password); // Enkripsi password jika diubah
         }
-        $guru->no_hp = $request->no_hp;
-        $guru->alamat = $request->alamat;
-        $guru->save();
+        $gurus->no_hp = $request->no_hp;
+        $gurus->alamat = $request->alamat;
+        $gurus->save();
 
         // Redirect ke halaman daftar guru dengan pesan sukses
-        return redirect()->route('guru.dashboard')->with('success', 'Data guru berhasil diperbarui.');
+        return redirect()->route('admin.guru.index')->with('success', 'Data guru berhasil diperbarui.');
     }
     public function destroy($id)
     {
-        $guru = Guru::findOrFail($id);
-        $guru->delete();
+        $gurus = Guru::findOrFail($id);
+        $gurus->delete();
 
-        return redirect()->route('guru.dashboard')->with('success', 'Data guru berhasil dihapus.');
+        return redirect()->route('admin.guru.index')->with('success', 'Data guru berhasil dihapus.');
     }
 
 }

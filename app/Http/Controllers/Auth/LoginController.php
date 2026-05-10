@@ -39,11 +39,11 @@ class LoginController extends Controller
         } 
         
         if ($user->hasRole('petugas')) {
-            return redirect()->intended('/petugas/dashboard');
+            return redirect()->intended(route('aspirasi.lihat'));
         } 
         
         if ($user->hasRole('kepsek')) {
-            return redirect()->intended('/kepsek/dashboard');
+            return redirect()->intended(route('aspirasi.lihat'));
         }
 
         // Default jika tidak ada role khusus

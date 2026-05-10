@@ -53,6 +53,33 @@
                 </div>
             </div>
         </div>
+
+        <!-- Card Total Kepala Sekolah -->
+        <div class="col-xl-3 col-lg-4 col-sm-6">
+            <div class="icon-card mb-30">
+                <div class="icon warning">
+                    <i class="lni lni-user"></i>
+                </div>
+                <div class="content">
+                    <h6 class="mb-10">Total Kepala Sekolah</h6>
+                    <h3 class="text-bold mb-10">{{ $totalKepsek }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card Total Petugas -->
+        <div class="col-xl-3 col-lg-4 col-sm-6">
+            <div class="icon-card mb-30">
+                <div class="icon success">
+                    <i class="lni lni-user"></i>
+                </div>
+                <div class="content">
+                    <h6 class="mb-10">Total Petugas</h6>
+                    <h3 class="text-bold mb-10">{{ $totalPetugas }}</h3>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 @endsection

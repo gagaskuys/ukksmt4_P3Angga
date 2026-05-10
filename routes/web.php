@@ -60,18 +60,4 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/aspirasi/update-status/{id}', [AspirasiController::class, 'updateStatus'])->name('aspirasi.updateStatus');
         Route::get('/aspirasi/detail/{id}', [AspirasiController::class, 'show'])->name('aspirasi.show');
     });
-
-    // --- DASHBOARD ROLE LAIN ---
-    // Route::middleware(['role:guru'])->prefix('guru')->group(function () {
-    //     Route::get('/dashboard', [GuruController::class, 'index'])->name('guru.dashboard');
-    // });
-
-    Route::middleware(['role:petugas'])->prefix('petugas')->group(function () {
-        Route::get('/dashboard', [PetugasController::class, 'index'])->name('petugas.dashboard');
-    });
-
-    Route::middleware(['role:kepsek'])->prefix('kepsek')->group(function () {
-        Route::get('/dashboard', [KepsekController::class, 'index'])->name('kepsek.dashboard');
-    });
-
 });
