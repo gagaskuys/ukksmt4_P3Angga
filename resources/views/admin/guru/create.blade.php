@@ -21,7 +21,7 @@
                 <input type="password" name="password" placeholder="Masukkan password" required>
             </div>
                 <div class="text-end">
-                        <a href="{{ route('guru.dashboard') }}" class="main-btn danger-btn-outline btn-hover">Batal</a>
+                        <a href="{{ route('guru.index') }}" class="main-btn danger-btn-outline btn-hover">Batal</a>
             <button type="submit" class="main-btn success-btn rounded-md btn-hover">Simpan</button>
         </form>
 @endsection

@@ -10,7 +10,7 @@
                 </div>
             </div>
             <div class="col-md-6 text-end">
-                <a href="{{ url('guru/dashboard/create') }}" class="main-btn primary-btn btn-hover">Tambah Guru</a>
+                <a href="{{ url('guru/create') }}" class="main-btn primary-btn btn-hover">Tambah Guru</a>
             </div>
         </div>
     </div>
