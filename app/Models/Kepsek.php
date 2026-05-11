@@ -8,9 +8,10 @@ class Kepsek extends Model
 {
     protected $table = 'kepseks';
     protected $fillable = [
-        'nama_kepsek',
-        'email',
-        'password',
+        'name',
+        'nip',
+        'jenis_kelamin',
+        'no_hp',
     ];
 
     public $timestamps = true; // Tetap aktifkan timestamps agar bisa diisi manual

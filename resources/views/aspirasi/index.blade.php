@@ -57,7 +57,20 @@
                                 </a>
                             </div>
                         </td>
+                        <td>
+                            <a href="{{ route('aspirasi.edit', $item->id) }}" class="text-primary me-3">
+                                <i class="lni lni-pencil"></i> Ubah
+                            </a>
+                            <form action="{{ route('admin.aspirasi.destroy', $item->id) }}" method="POST" class="d-inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-danger border-0 bg-transparent" onclick="return confirm('Yakin ingin menghapus data ini?')">
+                                    <i class="lni lni-trash-can"></i> Hapus
+                                </button>
+                            </form>
+                        </td>
                     </tr>
+
                     @empty
                     <tr>
                         <td colspan="6" class="text-center">

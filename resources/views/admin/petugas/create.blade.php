@@ -11,22 +11,35 @@
         </div>
     </div>
     <div class="card-style mb-30">
-        <form action="{{ route('petugas.store') }}" method="POST">
+        <form action="{{ route('admin.petugas.store') }}" method="POST">
             @csrf
             <div class="input-style-1">
+                <label> NIP</label>
+                <input type="text" name="nip" placeholder="Masukkan NIP petugas" required>
+            </div>
+            
+            <div class="input-style-1">
                 <label>Nama Lengkap</label>
-                <input type="text" name="nama_petugas" placeholder="Masukkan nama lengkap petugas" required>
+                <input type="text" name="name" placeholder="Masukkan nama lengkap petugas" required>
             </div>
             <div class="input-style-1">
-                <label>Email</label>
-                <input type="email" name="email" placeholder="Masukkan email petugas" required>
+                <label>Jabatan</label>
+                <input type="text" name="jabatan" placeholder="Masukkan jabatan petugas" required>
             </div>
+                <div class="input-style-1">
+                    <label>Jenis Kelamin</label>
+                    <select name="jenis_kelamin" class="form-control" required>
+                        <option value="">Pilih Jenis Kelamin</option>
+                        <option value="L">Laki-laki</option>
+                        <option value="P">Perempuan</option>
+                    </select>
+                </div>
             <div class="input-style-1">
                 <label>Nomor HP</label>
                 <input type="text" name="no_hp" placeholder="Masukkan nomor HP petugas (opsional)">
             </div>
             <div class="text-end">
-                <a href="{{ url('petugas') }}" class="main-btn danger-btn-outline btn-hover">Batal</a>
+                <a href="{{ route('admin.petugas.index') }}" class="main-btn danger-btn-outline btn-hover">Batal</a>
                 <button type="submit" class="main-btn success-btn rounded-md btn-hover">Simpan</button>
             </div>
         </form>

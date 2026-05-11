@@ -13,11 +13,13 @@ class Guru extends Model
     protected $primaryKey = 'id_guru'; // Sesuaikan jika kunci utamanya bukan 'id'
 
     protected $fillable = [
-        'nama_guru',
         'nip',
-        'email',
-        'password',
-        'no_hp',
+        'name',
+        'mata_pelajaran',
+        'jenis_kelamin',
+        'tanggal_lahir',
+        'alamat',
+        'no_telepon',
         'alamat'
     ];
     public $timestamps = true; // Tetap aktifkan timestamps agar bisa diisi manual

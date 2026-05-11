@@ -15,7 +15,7 @@
             </div>
             <div class="input-style-1">
                 <label>Nama Lengkap</label>
-                <input type="text" name="nama" placeholder="Masukkan nama" required>
+                <input type="text" name="name" placeholder="Masukkan nama" required>
             </div>
             <div class="select-style-1">
                 <label>Pilih kelas</label>
@@ -74,14 +74,6 @@
             <div class="input-style-1">
                 <label>No Telepon</label>
                 <input type="text" name="no_telepon" placeholder="Masukkan no telepon" required>
-            </div>
-            <div class="form-group">
-                <label>Dibuat Pada</label>
-                <input type="datetime-local" name="created_at" class="form-control" value="{{ old('created_at', now()->format('Y-m-d\TH:i')) }}">
-            </div>
-            <div class="form-group">
-                <label>Diupdate Pada</label>
-                <input type="datetime-local" name="updated_at" class="form-control" value="{{ old('updated_at', now()->format('Y-m-d\TH:i')) }}">
             </div>
             <div class="text-end">
                 <a href="{{ route('admin.siswa.index') }}" class="main-btn danger-btn-outline btn-hover">Batal</a>

@@ -8,37 +8,57 @@
                     <h2>Dashboard Petugas</h2>
                 </div>
             </div>
+            <!-- Pindahkan tombol ke sini agar sejajar di kanan -->
+            <div class="col-md-6 text-end">
+                <div class="mb-30">
+                    <a href="{{ route('admin.petugas.create') }}" class="main-btn primary-btn btn-hover">Tambah Petugas</a>
+                </div>
+            </div>
         </div>
     </div>
+
     <div class="card-style mb-30">
-        <div class="table-responsive">
-            <table class="table table-striped">
+        <div class="table-wrapper table-responsive"> <!-- Tambahkan class table-wrapper -->
+            <table class="table">
                 <thead>
                     <tr>
-                        <th>No</th>
-                        <th>Nama Petugas</th>
-                        <th>Email</th>
-                        <th>Nomor HP</th>
-                        <th>Aksi</th>
+                        <th><h6>No</h6></th>
+                        <th><h6>Nama Petugas</h6></th>
+                        <th><h6>NIP</h6></th>
+                        <th><h6>Jabatan</h6></th>
+                        <th><h6>Jenis Kelamin</h6></th>
+                        <th><h6>Nomor HP</h6></th>
+                        <th><h6>Aksi</h6></th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($petugas as $p)
+                    @forelse($petugas as $p)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $p->nama_petugas }}</td>
-                        <td>{{ $p->email }}</td>
-                        <td>{{ $p->no_hp }}</td>
+                        <td>{{ $p->name }}</td>
+                        <td>{{ $p->nip }}</td>
+                        <td>{{ $p->jabatan }}</td>
+                        <td>{{ $p->jenis_kelamin ?? '-' }}</td>
+                        <td>{{ $p->no_hp ?? '-' }}</td>
                         <td>
-                            <a href="{{ route('petugas.edit', $p->id_petugas) }}" class="btn btn-sm btn-primary">Edit</a>
-                            <form action="{{ route('petugas.destroy', $p->id_petugas) }}" method="POST" style="display: inline;">
+                            <!-- Gunakan style ikon agar seragam dengan halaman Kepsek -->
+                            <a href="{{ route('admin.petugas.edit', $p->id) }}" class="text-primary me-3">
+                                <i class="lni lni-pencil"></i> Ubah
+                            </a>
+                            <form action="{{ route('admin.petugas.destroy', $p->id) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus petugas ini?')">Hapus</button>
+                                <button type="submit" class="text-danger border-0 bg-transparent" onclick="return confirm('Yakin ingin menghapus?')">
+                                    <i class="lni lni-trash-can"></i> Hapus
+                                </button>
                             </form>
                         </td>
                     </tr>
-                    @endforeach
+                    @empty
+                    <tr>
+                        <td colspan="6" class="text-center">Belum ada data petugas.</td>
+                    </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>

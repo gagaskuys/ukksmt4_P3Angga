@@ -29,9 +29,15 @@
                     <tr>
                         <th><h6>No</h6></th>
                         <th><h6>Nama Lengkap</h6></th>
-                        <th><h6>Alamat email</h6></th>
-                        <th><h6>Dibuat Pada</h6></th>
-                        <th><h6>Diupdate Pada</h6></th>
+                        <th><h6>Nis</h6></th>
+                        <th><h6>Jurusan</h6></th>
+                        <th><h6>Kelas</h6></th>
+                        <th><h6>Jenis Kelamin</h6></th>
+                        <th><h6>Email</h6></th>
+                        <th><h6>Tanggal Lahir</h6></th>
+                        <th><h6>Alamat</h6></th>
+                        <th><h6>No Telepon</h6></th>
+                        <th><h6>Alamat</h6></th>
                         <th><h6>Aksi</h6></th>
                     </tr>
                 </thead>
@@ -39,10 +45,15 @@
                     @forelse($siswas as $key => $siswa)
                     <tr>
                         <td>{{ $key + 1 }}</td>
-                        <td>{{ $siswa->nama }}</td>
+                        <td>{{ $siswa->name }}</td>
+                        <td>{{ $siswa->number }}</td>
+                        <td>{{ $siswa->jurusan->nama_jurusan ?? 'N/A' }}</td>
+                        <td>{{ $siswa->kelas->nama_kelas ?? 'N/A' }}</td>
+                        <td>{{ $siswa->jenis_kelamin === 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
                         <td>{{ $siswa->email }}</td>
-                        <td>{{ optional($siswa->created_at)->format('d-m-Y') }}</td>
-                        <td>{{ optional($siswa->updated_at)->format('d-m-Y') }}</td>
+                        <td>{{ optional($siswa->tanggal_lahir)->format('d-m-Y') }}</td>
+                        <td>{{ $siswa->alamat }}</td>
+                        <td>{{ $siswa->no_telepon }}</td>
                         <td>
                             <a href="{{ route('admin.siswa.edit', $siswa->id) }}" class="text-primary me-3">
                                 <i class="lni lni-pencil"></i> Ubah

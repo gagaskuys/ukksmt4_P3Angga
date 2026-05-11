@@ -8,9 +8,11 @@ class Petugas extends Model
 {
     protected $table = 'petugas';
     protected $fillable = [
-        'nama_petugas',
-        'email',
-        'password',
+        'name',
+        'nip',
+        'jabatan',
+        'jenis_kelamin',
+        'no_hp',
     ];
     public $timestamps = true; // Tetap aktifkan timestamps agar bisa diisi manual
 }

@@ -9,7 +9,7 @@
                 </div>
             </div>
             <div class="col-md-6 text-end">
-                <a href="{{ url('kepsek/create') }}" class="main-btn primary-btn btn-hover">Tambah Kepala Sekolah</a>
+                <a href="{{ url('admin/kepsek/create') }}" class="main-btn primary-btn btn-hover">Tambah Kepala Sekolah</a>
             </div>
         </div>
     </div>
@@ -29,7 +29,7 @@
                         <th><h6>No</h6></th>
                         <th><h6>Nama Lengkap</h6></th>
                         <th><h6>NIP</h6></th>
-                        <th><h6>Email</h6></th>
+                        <th><h6>Jenis Kelamin</h6></th>
                         <th><h6>Nomor HP</h6></th>
                         <th><h6>Aksi</h6></th>
                     </tr>
@@ -38,15 +38,15 @@
                     @forelse($kepseks as $key => $kepsek)
                     <tr>
                         <td>{{ $key + 1 }}</td>
-                        <td>{{ $kepsek->nama_kepsek }}</td>
+                        <td>{{ $kepsek->name }}</td>
                         <td>{{ $kepsek->nip }}</td>
-                        <td>{{ $kepsek->email }}</td>
+                        <td>{{ $kepsek->jenis_kelamin ?? '-' }}</td>
                         <td>{{ $kepsek->no_hp ?? '-' }}</td>
                         <td>
-                            <a href="{{ route('kepsek.edit', $kepsek->id_kepsek) }}" class="text-primary me-3">
+                            <a href="{{ route('admin.kepsek.edit', $kepsek->id) }}" class="text-primary me-3">
                                 <i class="lni lni-pencil"></i> Ubah
                             </a>
-                            <form action="{{ route('kepsek.destroy', $kepsek->id_kepsek) }}" method="POST" class="d-inline">
+                            <form action="{{ route('admin.kepsek.destroy', $kepsek->id) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="text-danger border-0 bg-transparent" onclick="return confirm('Yakin ingin menghapus?')">

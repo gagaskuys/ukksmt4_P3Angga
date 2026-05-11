@@ -21,12 +21,23 @@ class PetugasController extends Controller
     {
         // Validasi data yang masuk
         $request->validate([
-            'nama_petugas' => 'required',
-            'email' => 'required|email|unique:petugas,email',
-            'password' => 'required|min:6',
+            'name' => 'required',
+            'nip' => 'required|unique:petugas,nip',
+            'jabatan' => 'required',
+            'jenis_kelamin' => 'required',
             'no_hp' => 'required',
-            'alamat' => 'required',
         ]); 
+        // Simpan data ke database
+        Petugas::create([
+            'name' => $request->name,
+            'nip' => $request->nip,
+            'jabatan' => $request->jabatan,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'no_hp' => $request->no_hp,
+        ]);
+
+        // Redirect ke halaman daftar petugas dengan pesan sukses
+        return redirect()->route('admin.petugas.index')->with('success', 'Data petugas berhasil disimpan.');
 }
 
     public function edit($id)
@@ -44,12 +55,11 @@ class PetugasController extends Controller
 
         $petugas = Petugas::findOrFail($id);
         $petugas->update([
-            'nama_petugas' => $request->nama_petugas,
-            'email' => $request->email,
-            // Jika password diisi, update passwordnya
-            'password' => $request->password ? bcrypt($request->password) : $petugas->password,
+            'name' => $request->name,
+            'nip' => $request->nip,
+            'jabatan' => $request->jabatan,
+            'jenis_kelamin' => $request->jenis_kelamin,
             'no_hp' => $request->no_hp,
-            'alamat' => $request->alamat,
         ]);
 
         return redirect()->route('admin.petugas.index')->with('success', 'Data petugas berhasil diperbarui.');

@@ -13,11 +13,11 @@
     </div>
     <div class="card-style mb-30">
         <h3>Apakah Anda yakin ingin menghapus akun ini?</h3>
-        <form action="{{ route('kepsek.destroy', $kepsek->id_kepsek) }}" method="POST">
+        <form action="{{ route('admin.kepsek.destroy', $kepsek->id_kepsek) }}" method="POST">
             @csrf
             @method('DELETE')
             <div class="text-end">
-                <a href="{{ url('kepsek') }}" class="main-btn danger-btn-outline btn-hover">Batal</a>
+                <a href="{{ route('admin.kepsek.index') }}" class="main-btn danger-btn-outline btn-hover">Batal</a>
                 <button type="submit" class="main-btn success-btn rounded-md btn-hover">Hapus</button>
             </div>
         </form>

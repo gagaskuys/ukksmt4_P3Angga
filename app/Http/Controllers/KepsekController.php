@@ -21,16 +21,18 @@ class KepsekController extends Controller
     {
         // Validasi data yang masuk
         $request->validate([
-            'nama_kepsek' => 'required',
-            'email' => 'required|email|unique:kepseks,email',
-            'password' => 'required|min:6',
+            'name' => 'required',
+            'nip' => 'required|unique:kepseks,nip',
+            'jenis_kelamin' => 'required',
+            'no_hp' => 'required',
         ]);
 
         // Simpan data ke database
         Kepsek::create([
-            'nama_kepsek' => $request->nama_kepsek,
-            'email' => $request->email,
-            'password' => bcrypt($request->password), // Enkripsi password
+            'name' => $request->name,
+            'nip' => $request->nip,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'no_hp' => $request->no_hp,
         ]);
 
         // Redirect ke halaman daftar kepsek dengan pesan sukses
@@ -40,22 +42,24 @@ class KepsekController extends Controller
     public function edit($id)
     {
         $kepseks = Kepsek::findOrFail($id);
-        return view('admin.kepsek.edit', compact('kepseks'));
+        return view('admin.kepsek.update', compact('kepseks'));
     }
     public function update(Request $request, $id)
     {
         // Validasi data yang masuk
         $request->validate([
-            'nama_kepsek' => 'required',
-            'email' => 'required|email|unique:kepseks,email,' . $id,
+            'name' => 'required',
+            'nip' => 'required|unique:kepseks,nip,' . $id,
+            'jenis_kelamin' => 'required',
+            'no_hp' => 'required',
         ]);
 
         $kepseks = Kepsek::findOrFail($id);
         $kepseks->update([
-            'nama_kepsek' => $request->nama_kepsek,
-            'email' => $request->email,
-            // Jika password diisi, update passwordnya
-            'password' => $request->password ? bcrypt($request->password) : $kepseks->password,
+            'name' => $request->name,
+            'nip' => $request->nip,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'no_hp' => $request->no_hp,
         ]);
 
         return redirect()->route('admin.kepsek.index')->with('success', 'Data kepala sekolah berhasil diperbarui.');

@@ -23,22 +23,24 @@ class GuruController extends Controller
     {
         // Validasi data yang masuk
         $request->validate([
-            'nama_guru' => 'required',
             'nip' => 'required|unique:gurus,nip',
-            'email' => 'required|email|unique:gurus,email',
-            'password' => 'required|min:6',
-            'no_hp' => 'required',
+            'name' => 'required',
+            'mata_pelajaran' => 'required',
+            'jenis_kelamin' => 'required',
+            'tanggal_lahir' => 'required|date',
             'alamat' => 'required',
+            'no_telepon' => 'required',
         ]);
 
         // Simpan data ke database
         Guru::create([
-            'nama_guru' => $request->nama_guru,
+            'name' => $request->name,
             'nip' => $request->nip,
-            'email' => $request->email,
-            'password' => bcrypt($request->password), // Enkripsi password
-            'no_hp' => $request->no_hp,
+            'mata_pelajaran' => $request->mata_pelajaran,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'tanggal_lahir' => $request->tanggal_lahir,
             'alamat' => $request->alamat,
+            'no_telepon' => $request->no_telepon,
         ]);
 
         // Redirect ke halaman daftar guru        return redirect()->route('guru.dashboard')->with('success', 'Data guru berhasil disimpan.');
@@ -49,17 +51,18 @@ class GuruController extends Controller
     public function edit($id)
     {
         $gurus = Guru::findOrFail($id);
-        return view('admin.guru.edit', compact('gurus'));
+        return view('admin.guru.update', compact('gurus'));
     }
     public function update(Request $request, $id)
     {
         // Validasi data yang masuk
         $request->validate([
-            'nama_guru' => 'required',
+            'name' => 'required',
             'nip' => 'required|unique:gurus,nip,' . $id,
-            'email' => 'required|email|unique:gurus,email,' . $id,
-            'password' => 'nullable|min:6',
-            'no_hp' => 'required',
+            'mata_pelajaran' => 'required',
+            'jenis_kelamin' => 'required',
+            'tanggal_lahir' => 'required|date',
+            'no_telepon' => 'required',
             'alamat' => 'required',
         ]);
 
@@ -67,13 +70,12 @@ class GuruController extends Controller
         $gurus = Guru::findOrFail($id);
 
         // Update data guru
-        $gurus->nama_guru = $request->nama_guru;
+        $gurus->name = $request->name;
         $gurus->nip = $request->nip;
-        $gurus->email = $request->email;
-        if ($request->password) {
-            $gurus->password = bcrypt($request->password); // Enkripsi password jika diubah
-        }
-        $gurus->no_hp = $request->no_hp;
+        $gurus->mata_pelajaran = $request->mata_pelajaran;
+        $gurus->jenis_kelamin = $request->jenis_kelamin;
+        $gurus->tanggal_lahir = $request->tanggal_lahir;
+        $gurus->no_telepon = $request->no_telepon;
         $gurus->alamat = $request->alamat;
         $gurus->save();
 

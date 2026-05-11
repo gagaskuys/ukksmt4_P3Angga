@@ -7,7 +7,6 @@ use App\Http\Controllers\GuruController;
 use App\Http\Controllers\PetugasController;
 use App\Http\Controllers\KepsekController;
 use App\Http\Controllers\AspirasiController;
-use App\Http\Controllers\DashboardSiswaController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\KelasController; 
 use App\Http\Controllers\JurusanController;

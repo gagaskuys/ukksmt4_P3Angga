@@ -7,11 +7,11 @@
         @method('PUT')
         <div class="input-style-1">
             <label>Nama Lengkap</label>
-            <input type="text" name="nama" value="{{ old('nama', $siswa->nama) }}" placeholder="Masukkan nama lengkap" required>
+            <input type="text" name="name" value="{{ old('name', $siswa->name) }}" placeholder="Masukkan nama lengkap" required>
         </div>
         <div class="input-style-1">
-            <label>NISN</label>
-            <input type="text" name="nisn" value="{{ old('nisn', $siswa->nisn) }}" placeholder="Masukkan NISN" required>
+            <label>NIS</label>
+            <input type="text" name="number" value="{{ old('number', $siswa->number) }}" placeholder="Masukkan NIS" required>
         </div>
         <div class="input-style-1">
             <label>Kelas</label>
@@ -57,7 +57,7 @@
             </div>
              <div class="input-style-1">
                 <label>Nomor Telepon</label>
-                <input type="text" name="nomor_telepon" value="{{ old('no_telepon', $siswa->no_telepon) }}" placeholder="Masukkan nomor telepon">
+                <input type="text" name="no_telepon" value="{{ old('no_telepon', $siswa->no_telepon) }}" placeholder="Masukkan nomor telepon">
             </div>
 
              <div class="text-end">

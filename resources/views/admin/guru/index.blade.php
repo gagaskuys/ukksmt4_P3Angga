@@ -10,7 +10,7 @@
                 </div>
             </div>
             <div class="col-md-6 text-end">
-                <a href="{{ url('guru/create') }}" class="main-btn primary-btn btn-hover">Tambah Guru</a>
+                <a href="{{ route('admin.guru.create') }}" class="main-btn primary-btn btn-hover">Tambah Guru</a>
             </div>
         </div>
     </div>
@@ -30,8 +30,11 @@
                         <th><h6>No</h6></th>
                         <th><h6>Nama Lengkap</h6></th>
                         <th><h6>NIP</h6></th>
-                        <th><h6>Email</h6></th>
-                        <th><h6>Nomor HP</h6></th>
+                        <th><h6>Mata Pelajaran</h6></th>
+                        <th><h6>Jenis Kelamin</h6></th>
+                        <th><h6>Tanggal Lahir</h6></th>
+                        <th><h6>Alamat</h6></th>
+                        <th><h6>Nomor Telepon</h6></th>
                         <th><h6>Aksi</h6></th>
                     </tr>
                 </thead>
@@ -39,15 +42,18 @@
                     @forelse($gurus as $key => $guru)
                     <tr>
                         <td>{{ $key + 1 }}</td>
-                        <td>{{ $guru->nama_guru }}</td>
                         <td>{{ $guru->nip }}</td>
-                        <td>{{ $guru->email }}</td>
-                        <td>{{ $guru->no_hp ?? '-' }}</td>
+                        <td>{{ $guru->name }}</td>
+                        <td>{{ $guru->mata_pelajaran ?? '-' }}</td>
+                        <td>{{ $guru->jenis_kelamin ?? '-' }}</td>
+                        <td>{{ $guru->tanggal_lahir ?? '-' }}</td>
+                        <td>{{ $guru->alamat ?? '-' }}</td>
+                        <td>{{ $guru->no_telepon ?? '-' }}</td>
                         <td>
-                            <a href="{{ route('guru.edit', $guru->id_guru) }}" class="text-primary me-3">
+                            <a href="{{ url('admin/guru/' . $guru->id_guru . '/edit') }}" class="text-primary me-3">
                                 <i class="lni lni-pencil"></i> Ubah
                             </a>
-                            <form action="{{ route('guru.destroy', $guru->id_guru) }}" method="POST" class="d-inline">
+                            <form action="{{ url('admin/guru/' . $guru->id_guru . '/destroy') }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="text-danger border-0 bg-transparent" onclick="return confirm('Yakin ingin menghapus?')">
@@ -58,7 +64,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="6" class="text-center">Belum ada data guru.</td>
+                        <td colspan="9" class="text-center">Belum ada data guru.</td>
                     </tr>
                     @endforelse
                 </tbody>

@@ -109,6 +109,11 @@
               <span class="text">Kelola Data Petugas</span>
           </a>
       </li>
+      <li class="nav-item">
+        <a href="{{ url('/aspirasi/history') }}">
+            <span class="text">History Aspirasi</span>
+        </a>
+    </li>
     @endrole
 
     {{-- 3. MENU KHUSUS SISWA (Nomor 16-18 di tabelmu) --}}
@@ -116,6 +121,11 @@
     <li class="nav-item">
         <a href="{{ route('siswa.create') }}">
             <span class="text">Input Aspirasi</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a href="{{ url('/aspirasi/history') }}">
+            <span class="text">History Aspirasi</span>
         </a>
     </li>
     @endrole

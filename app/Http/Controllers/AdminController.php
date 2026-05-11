@@ -19,7 +19,7 @@ class AdminController extends Controller
             $totalGuru = User::role('guru')->count();
             $totalKepsek = User::role('kepsek')->count();
             $totalPetugas = User::role('petugas')->count();
-            $totalAspirasi = \App\Models\Aspirasi::count(); // Nanti diisi jika tabel aspirasi sudah ada
+            $totalAspirasi = \App\Models\Aspirasi::count(); 
 
             return view('admin.dashboard.admin', compact('totalSiswa', 'totalGuru', 'totalKepsek', 'totalPetugas',  'totalAspirasi'));
         } 
