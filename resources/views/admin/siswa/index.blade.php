@@ -22,60 +22,69 @@
     </div>
     @endif
 
-    <div class="card-style mb-30">
-        <div class="table-wrapper table-responsive">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th><h6>No</h6></th>
-                        <th><h6>Nama Lengkap</h6></th>
-                        <th><h6>Nis</h6></th>
-                        <th><h6>Jurusan</h6></th>
-                        <th><h6>Kelas</h6></th>
-                        <th><h6>Jenis Kelamin</h6></th>
-                        <th><h6>Email</h6></th>
-                        <th><h6>Tanggal Lahir</h6></th>
-                        <th><h6>Alamat</h6></th>
-                        <th><h6>No Telepon</h6></th>
-                        <th><h6>Alamat</h6></th>
-                        <th><h6>Aksi</h6></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse($siswas as $key => $siswa)
-                    <tr>
-                        <td>{{ $key + 1 }}</td>
-                        <td>{{ $siswa->name }}</td>
-                        <td>{{ $siswa->number }}</td>
-                        <td>{{ $siswa->jurusan->nama_jurusan ?? 'N/A' }}</td>
-                        <td>{{ $siswa->kelas->nama_kelas ?? 'N/A' }}</td>
-                        <td>{{ $siswa->jenis_kelamin === 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
-                        <td>{{ $siswa->email }}</td>
-                        <td>{{ optional($siswa->tanggal_lahir)->format('d-m-Y') }}</td>
-                        <td>{{ $siswa->alamat }}</td>
-                        <td>{{ $siswa->no_telepon }}</td>
-                        <td>
-                            <a href="{{ route('admin.siswa.edit', $siswa->id) }}" class="text-primary me-3">
-                                <i class="lni lni-pencil"></i> Ubah
-                            </a>
-                            <form action="{{ route('admin.siswa.destroy', $siswa->id) }}" method="POST" class="d-inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="text-danger border-0 bg-transparent" onclick="return confirm('Yakin ingin menghapus data ini?')">
-                                    <i class="lni lni-trash-can"></i> Hapus
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                    @empty
-                    <tr>
-                        <td colspan="6" class="text-center">Belum ada data siswa.</td>
-                    </tr>
-                    @endforelse
-                </tbody>
-            </table>
+        <div class="card-style mb-30">
+            <div class="table-wrapper table-responsive">
+                <!-- Menambahkan class table-bordered dan table-striped agar bergaris dan berjarak -->
+                <table class="table table-bordered table-striped align-middle m-0">
+                    <thead>
+                        <tr class="bg-light">
+                            <th class="px-3 py-3" style="min-width: 50px;"><h6>No</h6></th>
+                            <th class="px-3 py-3" style="min-width: 150px;"><h6>Nama Lengkap</h6></th>
+                            <th class="px-3 py-3" style="min-width: 100px;"><h6>Nis</h6></th>
+                            <th class="px-3 py-3" style="min-width: 120px;"><h6>Jurusan</h6></th>
+                            <th class="px-3 py-3" style="min-width: 100px;"><h6>Kelas</h6></th>
+                            <th class="px-3 py-3" style="min-width: 130px;"><h6>Jenis Kelamin</h6></th>
+                            <th class="px-3 py-3" style="min-width: 180px;"><h6>Email</h6></th>
+                            <th class="px-3 py-3" style="min-width: 130px;"><h6>Tanggal Lahir</h6></th>
+                            <th class="px-3 py-3" style="min-width: 140px;"><h6>No Telepon</h6></th>
+                            <th class="px-3 py-3" style="min-width: 200px;"><h6>Alamat</h6></th>
+                            <th class="px-3 py-3 text-center" style="min-width: 150px;"><h6>Aksi</h6></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($siswas as $key => $siswa)
+                        <tr>
+                            <td class="px-3 py-3">{{ $key + 1 }}</td>
+                            <td class="px-3 py-3 fw-bold text-dark">{{ $siswa->name }}</td>
+                            <td class="px-3 py-3">{{ $siswa->nis ?? 'N/A' }}</td>
+                            <td class="px-3 py-3"><span class="status-btn close-btn">{{ $siswa->jurusan->nama_jurusan ?? 'N/A' }}</span></td>
+                            <td class="px-3 py-3"><span class="status-btn close-btn">{{ $siswa->kelas->nama_kelas ?? 'N/A' }}</span></td>
+                            <td class="px-3 py-3">@if($siswa->jenis_kelamin === 'L')
+                                                        Laki-laki
+                                                    @elseif($siswa->jenis_kelamin === 'P')
+                                                        Perempuan
+                                                    @else
+                                                        Tidak Diketahui
+                                                    @endif
+                            </td>
+                            <td class="px-3 py-3">{{ $siswa->email }}</td>
+                            <td class="px-3 py-3">{{ optional($siswa->tanggal_lahir)->format('d-m-Y') ?? 'N/A' }}</td>
+                            <td class="px-3 py-3">{{ $siswa->no_telepon }}</td>
+                            <td class="px-3 py-3 text-wrap" style="max-width: 250px;">{{ $siswa->alamat }}</td>
+                            <td class="px-3 py-3 text-center">
+                                <div class="action justify-content-center">
+                                    <a href="{{ route('admin.siswa.edit', $siswa->id) }}" class="text-primary me-3 text-decoration-none">
+                                        <i class="lni lni-pencil"></i> Ubah
+                                    </a>
+                                    <form action="{{ route('admin.siswa.destroy', $siswa->id) }}" method="POST" class="d-inline m-0">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="text-danger border-0 bg-transparent p-0" onclick="return confirm('Yakin ingin menghapus data ini?')">
+                                            <i class="lni lni-trash-can"></i> Hapus
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="11" class="text-center text-muted py-4">Belum ada data siswa.</td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
 
 @endsection

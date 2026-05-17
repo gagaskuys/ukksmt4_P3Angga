@@ -30,6 +30,7 @@
                     <option value="P" {{ $kepsek->jenis_kelamin == 'P' ? 'selected' : '' }}>Perempuan</option>
                 </select>
             </div>
+            </div>
             <div class="input-style-1">
                 <label>Nomor HP</label>
                 <input type="text" name="no_hp" value="{{ $kepsek->no_hp }}" placeholder="Masukkan nomor HP kepala sekolah (opsional)">

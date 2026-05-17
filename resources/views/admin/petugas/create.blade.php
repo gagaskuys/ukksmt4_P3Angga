@@ -17,7 +17,14 @@
                 <label> NIP</label>
                 <input type="text" name="nip" placeholder="Masukkan NIP petugas" required>
             </div>
-            
+            <div class="input-style-1">
+                <label>Email</label>
+                <input type="email" name="email" placeholder="Masukkan email petugas" required>
+            </div>
+                <div class="input-style-1">
+                    <label>Password</label>
+                    <input type="password" name="password" placeholder="Masukkan password petugas" required>
+                </div>
             <div class="input-style-1">
                 <label>Nama Lengkap</label>
                 <input type="text" name="name" placeholder="Masukkan nama lengkap petugas" required>

@@ -24,8 +24,6 @@ return new class extends Migration
             $table->date('tanggal_lahir');
             $table->string('alamat', 255);
             $table->string('no_telepon', 15);
-            $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->useCurrentOnUpdate();
         });
     }
 

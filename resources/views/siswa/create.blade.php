@@ -25,34 +25,32 @@
     @endif
 
     <div class="card-style mb-30">
-        <!-- Formulir dengan enctype untuk unggah berkas -->
         <form action="{{ route('aspirasi.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             
-            <!-- Pilih Kategori -->
+            <!-- Pilihan Kategori Kerusakan (Sudah Seragam Menggunakan $kat) -->
             <div class="select-style-1">
                 <label>Kategori Kerusakan</label>
                 <div class="select-position">
                     <select name="kategori_id" required>
                         <option value="">-- Pilih Kategori --</option>
-                        @foreach($kategoris as $k)
-                            <option value="{{ $k->id_kategori }}" {{ old('kategori_id') == $k->id_kategori ? 'selected' : '' }}>
-                                {{ $k->nama_kategori }}
+                        @foreach($kategoris as $kat)
+                            <option value="{{ $kat->id }}" {{ old('kategori_id') == $kat->id ? 'selected' : '' }}>
+                                {{ $kat->nama_kategori }}
                             </option>
                         @endforeach
                     </select>
                 </div>
             </div>
 
-            <!-- Pilih Ruangan / Lokasi -->
+            <!-- Pilihan Lokasi / Ruangan -->
             <div class="select-style-1">
                 <label>Lokasi / Ruangan</label>
                 <div class="select-position">
                     <select name="ruangan_id" required>
                         <option value="">-- Pilih Ruangan --</option>
                         @foreach($ruangans as $r)
-                            <!-- Ubah dari $r->id menjadi $r->id_ruangan sesuai pola kolommu -->
-                            <option value="{{ $r->id }}" {{ old('ruangan_id') == $r->id_ruangan ? 'selected' : '' }}>
+                            <option value="{{ $r->id }}" {{ old('ruangan_id') == $r->id ? 'selected' : '' }}>
                                 {{ $r->nama_ruangan }}
                             </option>
                         @endforeach
@@ -68,7 +66,7 @@
 
             <!-- Unggah Foto Bukti -->
             <div class="input-style-1">
-                <label>Foto Bukti (Opsional / Wajib sesuaikan aturanmu)</label>
+                <label>Foto Bukti</label>
                 <input type="file" name="foto" accept="image/*" />
                 <small class="text-muted">Format yang diizinkan: JPG, PNG, JPEG. Ukuran maksimal: 2MB.</small>
             </div>

@@ -13,7 +13,7 @@ class RuanganController extends Controller
     public function index()
     {
         $ruangans = Ruangan::latest()->get();
-        return view('ruangan.index', compact('ruangans'));
+        return view('admin.ruangan.index', compact('ruangans'));
     }
 
     /**
@@ -21,7 +21,7 @@ class RuanganController extends Controller
      */
     public function create()
     {
-        return view('ruangan.create');
+        return view('admin.ruangan.create');
     }
 
     /**
@@ -37,7 +37,7 @@ class RuanganController extends Controller
             'nama_ruangan' => $request->nama_ruangan
         ]);
 
-        return redirect()->route('ruangan.index')->with('success', 'Ruangan berhasil ditambahkan!');
+        return redirect()->route('admin.ruangan.index')->with('success', 'Ruangan berhasil ditambahkan!');
     }
 
     /**
@@ -53,8 +53,8 @@ class RuanganController extends Controller
      */
     public function edit(string $id)
     {
-        $ruangan = Ruangan::findOrFail($id);
-        return view('ruangan.edit', compact('ruangan'));
+        $ruangans = Ruangan::findOrFail($id);
+        return view('admin.ruangan.update', compact('ruangans'));
     }
 
     /**
@@ -66,12 +66,12 @@ class RuanganController extends Controller
             'nama_ruangan' => 'required|unique:ruangans,nama_ruangan,' . $id,
         ]);
 
-        $ruangan = Ruangan::findOrFail($id);
-        $ruangan->update([
+        $ruangans = Ruangan::findOrFail($id);
+        $ruangans->update([
             'nama_ruangan' => $request->nama_ruangan
         ]);
 
-        return redirect()->route('ruangan.index')->with('success', 'Ruangan berhasil diperbarui!');
+        return redirect()->route('admin.ruangan.index')->with('success', 'Ruangan berhasil diperbarui!');
     }
 
     /**
@@ -79,9 +79,9 @@ class RuanganController extends Controller
      */
     public function destroy(string $id)
     {
-        $ruangan = Ruangan::findOrFail($id);
-        $ruangan->delete();
+        $ruangans = Ruangan::findOrFail($id);
+        $ruangans->delete();
 
-        return redirect()->route('ruangan.index')->with('success', 'Ruangan berhasil dihapus!');
+        return redirect()->route('admin.ruangan.index')->with('success', 'Ruangan berhasil dihapus!');
     }
 }

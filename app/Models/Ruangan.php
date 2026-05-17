@@ -11,8 +11,8 @@ class Ruangan extends Model
 
     // app/Models/Ruangan.php
 protected $table = 'ruangans';
-protected $primaryKey = 'id_ruangan'; // Sesuai yang dipakai di tampilan
-protected $fillable = ['nama_ruangan', 'lokasi'];
+protected $primaryKey = 'id'; // Sesuai yang dipakai di tampilan
+protected $fillable = ['nama_ruangan']; // Sesuaikan dengan kolom yang ada di tabel
 
     // 3. Relasi ke Model Aspirasi (Satu ruangan bisa punya banyak aspirasi)
     public function aspirasis()

@@ -34,7 +34,7 @@ class SiswaController extends Controller
 {
     // 1. Validasi semua data yang diwajibkan di migrasi
     $request->validate([
-        'nama' => 'required',
+        'name' => 'required',
         'email' => 'required|email|unique:users,email',
         'password' => 'required|min:6',
         'nis' => 'required|unique:siswas,nis',
@@ -45,31 +45,35 @@ class SiswaController extends Controller
         'alamat' => 'required',
         'no_telepon' => 'required',
     ]);
-
-    DB::transaction(function () use ($request) {
-        // 2. Simpan ke tabel users (untuk akun login)
+try {
+            // 2. Simpan ke tabel users (untuk akun login)
         $user = User::create([
-            'name' => $request->nama,
+            'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'password' => $request->password, // <-- HAPUS Hash::make di sini
             'role' => 'siswa',
         ]);
 
-        // 3. Simpan ke tabel siswas (Lengkapi semua field migrasi)
+        // 3. Simpan ke tabel siswas
         Siswa::create([
             'user_id' => $user->id,
-            'name' => $request->nama,
+            'name' => $request->name,
             'nis' => $request->nis,
             'kelas_id' => $request->kelas_id,
             'jurusan_id' => $request->jurusan_id,
             'jenis_kelamin' => $request->jenis_kelamin,
             'email' => $request->email,
-            'password' => Hash::make($request->password), // Sesuai migrasimu
+            'password' => $request->password, // <-- HAPUS juga Hash::make di sini jika kolom password di tabel siswas ingin disamakan
             'tanggal_lahir' => $request->tanggal_lahir,
             'alamat' => $request->alamat,
             'no_telepon' => $request->no_telepon,
         ]);
-    });
+
+    } catch (\Exception $e) {
+
+    dd($e->getMessage());
+
+}
 
     return redirect()->route('admin.siswa.index')->with('success', 'Data siswa berhasil ditambahkan!');
 }
@@ -91,14 +95,14 @@ class SiswaController extends Controller
         $user = User::findOrFail($siswa->user_id);
 
         $request->validate([
-            'nama' => 'required',
+            'name' => 'required',
             'email' => 'required|email|unique:users,email,' . $user->id,
         ]);
 
         DB::transaction(function () use ($request, $siswa, $user) {
             // Update tabel users
             $userData = [
-                'name' => $request->nama,
+                'name' => $request->name,
                 'email' => $request->email,
             ];
 
@@ -109,7 +113,7 @@ class SiswaController extends Controller
 
             // Update tabel siswas
             $siswa->update([
-                'name' => $request->nama,
+                'name' => $request->name,
                 'nis' => $request->nis ?? $siswa->nis,
                 'created_at' => $request->created_at,
                 'updated_at' => $request->updated_at,   

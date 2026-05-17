@@ -33,6 +33,14 @@
                 <label>Nomor HP</label>
                 <input type="text" name="no_hp" placeholder="Masukkan nomor HP kepala sekolah (opsional)">
             </div>
+            <div class="input-style-1">
+                <label>Email</label>
+                <input type="email" name="email" placeholder="Masukkan email kepala sekolah" required>
+            </div>
+            <div class="input-style-1">
+                <label>Password</label>
+                <input type="password" name="password" placeholder="Masukkan password untuk kepala sekolah (minimal 6 karakter)" required>  
+            </div>
             <div class="text-end">
                 <a href="{{ url('admin/kepsek') }}" class="main-btn danger-btn-outline btn-hover">Batal</a>
                 <button type="submit" class="main-btn success-btn rounded-md btn-hover">Simpan</button>

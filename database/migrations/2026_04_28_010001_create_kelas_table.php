@@ -14,8 +14,6 @@ return new class extends Migration
         Schema::create('kelas', function (Blueprint $table) {
             $table->id(); // ID kelas unik untuk setiap kelas
             $table->string('nama_kelas', 50); // Nama kelas, misalnya "X IPA 1", "XI IPS 2", dll.
-            $table->timestamps('created_at')->useCurrent();
-            $table->timestamps('updated_at')->useCurrentOnUpdate();
         });
     }
 

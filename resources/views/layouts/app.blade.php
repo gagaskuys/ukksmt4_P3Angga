@@ -362,7 +362,7 @@
                         <div>
                           {{-- Menampilkan Role Aktif (Opsional, bisa dihapus jika sudah yakin) --}}
                           <h6 class="fw-500">{{ auth()->user()->name }}</h6>
-                          <p>Role: {{ auth()->user()->getRoleNames()->first() }}</p>
+                          <p>Role: {{ ucfirst(auth()->user()->role) }}</p>
                         </div>
                       </div>
                     </div>

@@ -5,13 +5,23 @@
     <div class="title-wrapper pt-30">
         <h2>Tambah Siswa Baru</h2>
     </div>
-
+    ```php id="5s69wr"
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+``` 
     <div class="card-style mb-30">
         <form action="{{ route('admin.siswa.store') }}" method="POST">
             @csrf
             <div class="input-style-1">
                 <label>Nis</label>
-                <input type="text" name="number" placeholder="Masukkan nis" required>
+                <input type="text" name="nis" placeholder="Masukkan nis" required>
             </div>
             <div class="input-style-1">
                 <label>Nama Lengkap</label>

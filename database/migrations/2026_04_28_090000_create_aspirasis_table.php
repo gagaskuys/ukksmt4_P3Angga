@@ -24,8 +24,6 @@ return new class extends Migration
     $table->text('deskripsi_laporan');
     $table->string('foto', 255)->nullable();
     $table->enum('status', ['menunggu', 'proses', 'selesai'])->default('menunggu');
-    $table->timestamps('created_at')->useCurrent();
-    $table->timestamps('updated_at')->useCurrentOnUpdate();
 });
 
     }

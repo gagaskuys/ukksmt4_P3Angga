@@ -10,18 +10,20 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
-        ->withMiddleware(function (Middleware $middleware) {
+    ->withMiddleware(function (Middleware $middleware) {
         // 1. Tambahkan pengecualian CSRF untuk sementara agar tidak 419
         $middleware->validateCsrfTokens(except: [
             '/login', 
         ]);
 
-        // 2. Alias Spatie yang sudah kamu buat
+        // 2. Daftar Alias Middleware Aplikasi Anda
         $middleware->alias([
             'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
-'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
-'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
-
+            'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
+            'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
+            
+            // TAMBAHKAN BARIS INI: Daftarkan pengaman kustom baru kita
+            'cekrole' => \App\Http\Middleware\CekRole::class,
         ]);
     })
 

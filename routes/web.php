@@ -29,7 +29,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
 
     // --- FITUR KHUSUS ADMIN ---
-    Route::middleware(['role:admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::middleware(['cekrole:admin'])->prefix('admin')->name('admin.')->group(function () {
         Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard.admin');
         
         // Resource ini sudah otomatis mencakup semua fungsi CRUD (Index, Create, Store, Edit, Update, Destroy)
@@ -46,14 +46,14 @@ Route::middleware(['auth'])->group(function () {
     });
 
     // --- FITUR KHUSUS SISWA ---
-    Route::middleware(['role:siswa'])->group(function () {
+    Route::middleware(['cekrole:siswa'])->group(function () {
         Route::get('/aspirasi/input', [AspirasiController::class, 'create'])->name('siswa.create');
         Route::post('/aspirasi/simpan', [AspirasiController::class, 'store'])->name('aspirasi.store');
         Route::get('/aspirasi/histori', [AspirasiController::class, 'history'])->name('aspirasi.history');
     });
 
     // --- FITUR MONITORING (Admin, Guru, Petugas, Kepsek) ---
-    Route::middleware(['role:admin|guru|petugas|kepsek'])->group(function () {
+    Route::middleware(['cekrole:admin|guru|petugas|kepsek'])->group(function () {
         Route::get('/aspirasi/monitoring', [AspirasiController::class, 'index'])->name('aspirasi.index');
         Route::get('/aspirasi/lihat', [AspirasiController::class, 'lihatSemua'])->name('aspirasi.lihat');
         Route::post('/aspirasi/update-status/{id}', [AspirasiController::class, 'updateStatus'])->name('aspirasi.updateStatus');

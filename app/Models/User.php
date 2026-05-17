@@ -21,6 +21,7 @@ use HasFactory, Notifiable, HasRoles;
         'name',
         'email',
         'password',
+        'role', // Tambahkan field role untuk menyimpan peran pengguna
     ];
     /**
      * The attributes that should be hidden for serialization.
@@ -46,6 +47,18 @@ use HasFactory, Notifiable, HasRoles;
     }
     public function siswa() {
     return $this->hasOne(Siswa::class);
+}
+    public function guru() {
+    return $this->hasOne(Guru::class);
+}
+public function kepsek() {
+    return $this->hasOne(Kepsek::class);
+}
+// public function admin() {
+//     return $this->hasOne(Admin::class);
+// }
+public function petugas() {
+    return $this->hasOne(Petugas::class);
 }
 
 }

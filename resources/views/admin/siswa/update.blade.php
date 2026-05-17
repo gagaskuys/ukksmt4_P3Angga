@@ -11,7 +11,7 @@
         </div>
         <div class="input-style-1">
             <label>NIS</label>
-            <input type="text" name="number" value="{{ old('number', $siswa->number) }}" placeholder="Masukkan NIS" required>
+            <input type="text" name="nis" value="{{ old('nis', $siswa->nis) }}" placeholder="Masukkan NIS" required>
         </div>
         <div class="input-style-1">
             <label>Kelas</label>

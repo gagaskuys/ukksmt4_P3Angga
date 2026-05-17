@@ -1,17 +1,42 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <h1>Tambah Jurusan</h1>
-    <form action="{{ route('admin.jurusan.store') }}" method="POST">
-        @csrf
-        <div class="form-group">
-            <label for="nama_jurusan">Nama Jurusan</label>
-            <input type="text" class="form-control"  name="nama_jurusan" required>
+<div class="container-fluid">
+    <div class="title-wrapper pt-30">
+        <div class="title mb-30">
+            <h2>Tambah Jurusan</h2>
         </div>
-            <div class="text-end">
-                        <a href="{{ route('admin.jurusan.index') }}" class="main-btn danger-btn-outline btn-hover">Batal</a>
-        <button type="submit" class="btn btn-primary">Simpan</button>
-    </form>
+    </div>
+
+    <!-- Tampilkan Pesan Galat / Error Validasi jika ada -->
+    @if ($errors->any())
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <ul class="mb-0">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+    </div>
+    @endif
+
+    <!-- Membungkus form ke dalam card-style agar muncul kotak putih yang rapi -->
+    <div class="card-style mb-30">
+        <form action="{{ route('admin.jurusan.store') }}" method="POST">
+            @csrf
+            
+            <!-- Menggunakan class input template PlainAdmin -->
+            <div class="input-style-1">
+                <label for="nama_jurusan">Nama Jurusan</label>
+                <input type="text" name="nama_jurusan" value="{{ old('nama_jurusan') }}" placeholder="Masukkan nama jurusan (contoh: Rekayasa Perangkat Lunak)" required>
+            </div>
+
+            <!-- Tombol aksi yang seragam -->
+            <div class="text-end mt-4">
+                <a href="{{ route('admin.jurusan.index') }}" class="main-btn danger-btn-outline btn-hover">Batal</a>
+                <button type="submit" class="main-btn success-btn rounded-md btn-hover">Simpan</button>
+            </div>
+        </form>
+    </div>
 </div>
 @endsection

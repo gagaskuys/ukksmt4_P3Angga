@@ -14,8 +14,6 @@ return new class extends Migration
         Schema::create('ruangans', function (Blueprint $table) {
             $table->id();
             $table->string('nama_ruangan', 50); // Nama ruangan, misalnya "Ruang Kelas 1", "Ruang Guru", dll.
-            $table->timestamps('created_at')->useCurrent();
-            $table->timestamps('updated_at')->useCurrentOnUpdate();
         });
     }
 

@@ -3,18 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model; // Gunakan Model biasa, bukan Authenticatable jika login pakai tabel users
+use Illuminate\Database\Eloquent\Model;
 
 class Siswa extends Model
 {
     use HasFactory;
 
     protected $table = 'siswas';
-
-    // Sesuaikan dengan phpMyAdmin kamu yang kolomnya cuma 'id'
     protected $primaryKey = 'id'; 
 
-    // Kolom ini harus SAMA PERSIS dengan yang ada di phpMyAdmin kamu
     protected $fillable = [
         'user_id',
         'name',
@@ -22,15 +19,40 @@ class Siswa extends Model
         'kelas_id',
         'jurusan_id',
         'jenis_kelamin',
+        'email',
+        'password',
         'tanggal_lahir',
         'alamat',
         'no_telepon',
     ];
 
-    public $timestamps = true; // Tetap aktifkan timestamps agar bisa diisi manual
+    public $timestamps = true;
 
+     // TAMBAHKAN KODE INI: Mengubah string tanggal menjadi objek Carbon secara otomatis
+    protected $casts = [
+        'tanggal_lahir' => 'date',
+    ];
+    // Relasi ke tabel Users
+    // 2. Tambahkan fungsi ini untuk mengunci nama kolom ID saat proses Delete/Update
+    public function getKeyName()
+    {
+        return 'id';
+    }
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    // TENTU KAN RELASI KE JURUSAN (Tambahan Baru)
+    public function jurusan()
+    {
+        return $this->belongsTo(Jurusan::class, 'jurusan_id');
+    }
+
+    // TENTU KAN RELASI KE KELAS (Tambahan Baru)
+    public function kelas()
+    {
+        return $this->belongsTo(Kelas::class, 'kelas_id');
+    }
+        
 }

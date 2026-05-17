@@ -21,8 +21,6 @@ return new class extends Migration
             $table->string('jabatan', 50);
             $table->enum('jenis_kelamin', ['L', 'P']);
             $table->string('no_hp', 15);
-            $table->timestamps('created_at')->useCurrent();
-            $table->timestamps('updated_at')->useCurrentOnUpdate();
         });
     }
 
