@@ -2,33 +2,30 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Aspirasi extends Model
 {
-    // Ini adalah bagian paling penting agar data bisa masuk ke database
+    use HasFactory;
+
+    // Kolom yang boleh diisi - SUDAH DIBERSIHKAN
     protected $fillable = [
-        'siswa_id', 
-        'kategori_id', 
-        'ruangan_id', 
-        'deskripsi_laporan', 
-        'foto', 
-        'status'
+        'siswa_id',
+        'kategori_id',
+        'ruangan_id',
+        'deskripsi_laporan',
+        'foto',
+        'status',
     ];
 
-    // Relasi ke Siswa
-    public function siswa()
-    {
-        return $this->belongsTo(Siswa::class, 'siswa_id');
-    }
-
-    // Relasi ke Kategori
+    // Hubungan ke Tabel Kategori - SESUAI id_kategori KAMU
     public function kategori()
     {
-        return $this->belongsTo(Kategori::class, 'kategori_id');
+        return $this->belongsTo(Kategori::class, 'kategori_id', 'id_kategori');
     }
 
-    // Relasi ke Ruangan
+    // Hubungan ke Tabel Ruangan
     public function ruangan()
     {
         return $this->belongsTo(Ruangan::class, 'ruangan_id');

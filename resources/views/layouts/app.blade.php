@@ -52,15 +52,14 @@
             </a>
 </a>
 <ul id="ddmenu_1" class="collapse show dropdown-nav">
-    {{-- 1. MENU DASHBOARD UTAMA (Bisa diakses semua Role) --}}
-    {{-- Karena rutenya satu, tapi isinya otomatis berubah sesuai role di Controller --}}
+    {{-- 1. MENU DASHBOARD UTAMA (Bisa diakses SEMUA JABATAN) --}}
     <li class="nav-item">
-        <a href="{{ url('/admin/dashboard') }}">
+        <a href="{{ url('/dashboard') }}"> {{-- Saya ganti ke /dashboard biar sesuai rute umum --}}
             <span class="text">Dashboard Utama</span>
         </a>
     </li>
 
-    {{-- 2. MENU KHUSUS ADMIN (Nomor 9-15 di tabelmu) --}}
+    {{-- 2. MENU KHUSUS ADMIN --}}
     @role('admin')
     <li class="nav-item">
         <a href="{{ route('admin.siswa.index') }}">
@@ -72,7 +71,7 @@
             <span class="text">Kelola Aspirasi Siswa</span>
         </a>
     </li>
-        <li class="nav-item">
+    <li class="nav-item">
         <a href="{{ route('admin.kategori.index') }}">
             <span class="text">Kelola Kategori</span>
         </a>
@@ -92,40 +91,39 @@
             <span class="text">Kelola Ruangan</span>
         </a>
     </li>
-    
     <li class="nav-item">
         <a href="{{ route('admin.guru.index') }}">
             <span class="text">Kelola Data Guru</span>
         </a>
     </li>
-
     <li class="nav-item">
         <a href="{{ route('admin.kepsek.index') }}">
             <span class="text">Kelola Data Kepala Sekolah</span>
         </a>
     </li>
-      <li class="nav-item">
-          <a href="{{ route('admin.petugas.index') }}">
-              <span class="text">Kelola Data Petugas</span>
-          </a>
-      </li>
-      <li class="nav-item">
-        <a href="{{ url('/aspirasi/history') }}">
+    <li class="nav-item">
+        <a href="{{ route('admin.petugas.index') }}">
+            <span class="text">Kelola Data Petugas</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a href="{{ route('aspirasi.history') }}"> {{-- Saya ganti pakai nama rute biar lebih aman --}}
             <span class="text">History Aspirasi</span>
         </a>
     </li>
     @endrole
 
-    {{-- 3. MENU KHUSUS SISWA (Nomor 16-18 di tabelmu) --}}
+    {{-- 3. MENU KHUSUS SISWA --}}
+    {{-- INI BAGIAN YANG KAMU MINTA: Cuma muncul 2 menu ini kalau siswa login --}}
     @role('siswa')
     <li class="nav-item">
         <a href="{{ route('siswa.create') }}">
-            <span class="text">Input Aspirasi</span>
+            <span class="text">📝 Input Aspirasi Baru</span> {{-- Saya tambah emoji biar kelihatan bagus --}}
         </a>
     </li>
     <li class="nav-item">
-        <a href="{{ url('/aspirasi/history') }}">
-            <span class="text">History Aspirasi</span>
+        <a href="{{ route('aspirasi.history') }}">
+            <span class="text">📋 Lihat History Aspirasi</span>
         </a>
     </li>
     @endrole
@@ -133,14 +131,14 @@
     {{-- 4. MENU BERSAMA (GURU, PETUGAS, KEPSEK, ADMIN) --}}
     @hasanyrole('guru|petugas|kepsek|admin')
     <li class="nav-item">
-        <a href="{{ url('/aspirasi/lihat') }}">
-            <span class="text">Lihat Semua Aspirasi</span>
+        <a href="{{ route('aspirasi.lihat') }}">
+            <span class="text">👁️ Lihat Semua Aspirasi</span>
         </a>
     </li>
     @endhasanyrole
 
 </ul>
-            <li class="nav-item nav-item-has-children">
+      <li class="nav-item nav-item-has-children">
             <a
               href="#0"
               class="collapsed"

@@ -28,41 +28,43 @@
         <form action="{{ route('aspirasi.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             
-            <!-- Pilihan Kategori Kerusakan (Sudah Seragam Menggunakan $kat) -->
-            <div class="select-style-1">
-                <label>Kategori Kerusakan</label>
-                <div class="select-position">
-                    <select name="kategori_id" required>
-                        <option value="">-- Pilih Kategori --</option>
-                        @foreach($kategoris as $kat)
-                            <option value="{{ $kat->id }}" {{ old('kategori_id') == $kat->id ? 'selected' : '' }}>
-                                {{ $kat->nama_kategori }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
+           <!-- Pilihan Kategori Kerusakan (Sudah Seragam Menggunakan $kat) -->
+<div class="select-style-1">
+    <label>Kategori Kerusakan</label>
+    <div class="select-position">
+        <select name="kategori_id" required>
+            <option value="">-- Pilih Kategori --</option>
+            @foreach($kategoris as $kat)
+                <!-- ✅ UBAH $kat->id MENJADI $kat->id_kategori -->
+                <option value="{{ $kat->id_kategori }}" {{ old('kategori_id') == $kat->id_kategori ? 'selected' : '' }}>
+                    {{ $kat->nama_kategori }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+</div>
 
-            <!-- Pilihan Lokasi / Ruangan -->
-            <div class="select-style-1">
-                <label>Lokasi / Ruangan</label>
-                <div class="select-position">
-                    <select name="ruangan_id" required>
-                        <option value="">-- Pilih Ruangan --</option>
-                        @foreach($ruangans as $r)
-                            <option value="{{ $r->id }}" {{ old('ruangan_id') == $r->id ? 'selected' : '' }}>
-                                {{ $r->nama_ruangan }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
+<!-- Pilihan Lokasi / Ruangan -->
+<div class="select-style-1">
+    <label>Lokasi / Ruangan</label>
+    <div class="select-position">
+        <select name="ruangan_id" required>
+            <option value="">-- Pilih Ruangan --</option>
+            @foreach($ruangans as $r)
+                <!-- ✅ Ini sudah BENAR, karena di tabel ruangan kuncinya emang 'id' -->
+                <option value="{{ $r->id }}" {{ old('ruangan_id') == $r->id ? 'selected' : '' }}>
+                    {{ $r->nama_ruangan }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+</div>
 
-            <!-- Deskripsi Laporan -->
-            <div class="input-style-1">
-                <label>Detail Kerusakan / Aspirasi</label>
-                <textarea name="deskripsi_laporan" rows="5" placeholder="Jelaskan secara rinci apa yang rusak atau apa yang menjadi usulanmu..." required>{{ old('deskripsi_laporan') }}</textarea>
-            </div>
+<!-- Deskripsi Laporan -->
+<div class="input-style-1">
+    <label>Detail Kerusakan / Aspirasi</label>
+    <textarea name="deskripsi_laporan" rows="5" placeholder="Jelaskan secara rinci apa yang rusak atau apa yang menjadi usulanmu..." required>{{ old('deskripsi_laporan') }}</textarea>
+</div>
 
             <!-- Unggah Foto Bukti -->
             <div class="input-style-1">
@@ -73,7 +75,7 @@
 
             <div class="mt-4">
                 <button type="submit" class="main-btn primary-btn btn-hover">Kirim Aspirasi</button>
-                <a href="{{ route('siswa.create') }}" class="main-btn secondary-btn btn-hover ms-2">Batal</a>
+                <a href="{{ route('aspirasi.history') }}" class="main-btn secondary-btn btn-hover ms-2">Batal</a>
             </div>
         </form>
     </div>

@@ -12,19 +12,18 @@ use Illuminate\Support\Facades\Auth;
 class AspirasiController extends Controller
 {
     /**
-     * Menampilkan Form Input Aspirasi (No. 16)
+     * Menampilkan Form Input Aspirasi 
      */
     public function create()
     {
         $kategoris = Kategori::all();
         $ruangans = Ruangan::all();
 
-        // Diarahkan ke resources/views/siswa/create.blade.php sesuai struktur filemu
         return view('siswa.create', compact('kategoris', 'ruangans'));
     }
 
     /**
-     * Menyimpan Data Aspirasi (No. 16)
+     * Menyimpan Data Aspirasi 
      */
     public function store(Request $request)
     {
@@ -35,13 +34,13 @@ class AspirasiController extends Controller
             'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
-        // Proses simpan foto jika diunggah oleh siswa
+        // Proses simpan foto jika diunggah
         $path = null;
         if ($request->hasFile('foto')) {
             $path = $request->file('foto')->store('aspirasi', 'public');
         }
 
-        // Menggunakan method pencarian instan agar aman dari error Object Null
+        // Ambil data user & siswa yang sedang LOGIN
         $user = Auth::user();
         $siswa = \App\Models\Siswa::where('user_id', $user->id)->first();
 
@@ -49,8 +48,9 @@ class AspirasiController extends Controller
             return redirect()->back()->withErrors(['error' => 'Profil identitas Siswa Anda tidak ditemukan di sistem. Harap hubungi Admin.'])->withInput();
         }
 
+        // ✅ SIMPAN DATA TANPA NOMOR PROGRES
         Aspirasi::create([
-            'siswa_id'          => $siswa->id, // Mengunci ke ID tabel siswas menggunakan kolom 'id'
+            'siswa_id'          => $siswa->id,
             'kategori_id'       => $request->kategori_id,
             'ruangan_id'        => $request->ruangan_id,
             'deskripsi_laporan' => $request->deskripsi_laporan,
@@ -58,11 +58,11 @@ class AspirasiController extends Controller
             'status'            => 'menunggu', 
         ]);
 
-        return redirect()->route('admin.siswa.index')->with('success', 'Aspirasi berhasil dikirim!');
+        return redirect()->route('aspirasi.history')->with('success', 'Aspirasi berhasil dikirim!');
     }
 
     /**
-     * Menampilkan Histori Aspirasi Siswa (No. 17)
+     * Menampilkan Histori Aspirasi Siswa 
      */
     public function history()
     {
@@ -73,31 +73,39 @@ class AspirasiController extends Controller
             return redirect()->back()->with('error', 'Data siswa tidak ditemukan.');
         }
         
-        // Ambil aspirasi hanya milik siswa yang login
-        $aspirasis = Aspirasi::where('siswa_id', $siswa->id)->latest()->get();
+        // ✅ Ambil data urut dari yang TERBARU masuk ke paling atas (pakai waktu)
+        $aspirasis = Aspirasi::where('siswa_id', $siswa->id)
+                        ->with(['kategori', 'ruangan']) // Ambil nama kategori & ruangan
+                        ->orderBy('created_at', 'DESC') // Urut berdasarkan waktu dibuat
+                        ->get();
 
-        return view('siswa.history', compact('aspirasis'));
+        return view('aspirasi.history', compact('aspirasis'));
     }
 
     /**
-     * Menampilkan Monitoring Aspirasi untuk Admin/Guru/Kepsek (No. 19)
+     * Menampilkan Monitoring Aspirasi untuk Admin/Guru/Kepsek 
      */
-    public function index()
-    {
-        $aspirasis = Aspirasi::with(['siswa', 'kategori', 'ruangan'])->latest()->get();
+    /**
+ * Menampilkan Monitoring Aspirasi untuk Admin/Guru/Kepsek
+ */
+public function index()
+{
+    // Ubah ->get() menjadi ->paginate(10)
+    $aspirasis = Aspirasi::with(['siswa', 'kategori', 'ruangan'])->latest()->paginate(10);
 
-        $statistikKategori = Aspirasi::with('kategori')
-            ->select('kategori_id', DB::raw('count(*) as total'))
-            ->groupBy('kategori_id')
-            ->get();
+    $statistikKategori = Aspirasi::with('kategori')
+        ->select('kategori_id', DB::raw('count(*) as total'))
+        ->groupBy('kategori_id')
+        ->get();
 
-        return view('aspirasi.monitoring', compact('aspirasis', 'statistikKategori'));
-    }
+    return view('aspirasi.monitoring', compact('aspirasis', 'statistikKategori'));
+}
 
-    public function lihatSemua()
-    {
-        $aspirasis = Aspirasi::with(['siswa', 'kategori', 'ruangan'])->latest()->get();
-        
-        return view('aspirasi.index', compact('aspirasis'));
-    }
+public function lihatSemua()
+{
+    // Ubah ->get() menjadi ->paginate(10)
+    $aspirasis = Aspirasi::with(['siswa', 'kategori', 'ruangan'])->latest()->paginate(10);
+    
+    return view('aspirasi.index', compact('aspirasis'));
+}
 }

@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Kepsek; 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use App\Models\User; 
+use App\Models\Kepsek;
+use App\Models\User;
 
 class KepsekController extends Controller
 {
@@ -64,48 +64,44 @@ class KepsekController extends Controller
     }
 
     public function update(Request $request, $id)
-    {
-        // 1. Ambil data secara manual menggunakan kolom 'id'
-        $kepsek = Kepsek::where('id', $id)->firstOrFail();
+{
+    // 1. Ambil data kepala sekolah berdasarkan ID
+    $kepsek = Kepsek::where('id', $id)->firstOrFail();
 
-        // 2. Validasi data yang masuk dengan aman
-        $request->validate([
-            'name' => 'required',
-            'nip' => [
-                'required',
-                \Illuminate\Validation\Rule::unique('kepseks', 'nip')->ignore($id, 'id')
-            ],
-            'jenis_kelamin' => 'required',
-            'no_hp' => 'required',
-            'email' => [
-                'required',
-                'email',
-                \Illuminate\Validation\Rule::unique('users', 'email')->ignore($kepsek->user_id, 'id')
-            ],
-            'password' => 'nullable|min:6', 
-        ]);
+    // 2. Validasi data input form
+    $request->validate([
+        'name'          => 'required',
+        'nip'           => ['required', \Illuminate\Validation\Rule::unique('kepseks', 'nip')->ignore($id, 'id')],
+        'jenis_kelamin' => 'required',
+        'no_hp'         => 'required',
+        'email'         => ['required', 'email', \Illuminate\Validation\Rule::unique('users', 'email')->ignore($kepsek->user_id, 'id')],
+        'password'      => 'nullable|min:6', 
+    ]);
 
-        // 3. Simpan perubahan ke database menggunakan transaksi (Sama persis gaya Guru)
-        DB::transaction(function () use ($request, $kepsek) {
-            // Update akun login di tabel users
-            $user = User::findOrFail($kepsek->user_id);
-            $user->name = $request->name;
-            $user->email = $request->email;
-            if ($request->filled('password')) {
-                $user->password = Hash::make($request->password); // Menggunakan Hash::make
-            }
-            $user->save();
+    // 3. Proses simpan menggunakan Database Transaction (Aman & Sinkron)
+    DB::transaction(function () use ($request, $kepsek) {
+        // A. Update data di tabel users
+        $user = User::findOrFail($kepsek->user_id);
+        $user->name  = $request->name;
+        $user->email = $request->email;
+        
+        // Hanya update password jika kolom password diisi oleh admin
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+        $user->save();
 
-            // Update data di tabel kepseks
-            $kepsek->name = $request->name;
-            $kepsek->nip = $request->nip;
-            $kepsek->jenis_kelamin = $request->jenis_kelamin;
-            $kepsek->no_hp = $request->no_hp;
-            $kepsek->save();
-        });
+        // B. Update data di tabel kepseks
+        $kepsek->name          = $request->name;
+        $kepsek->nip           = $request->nip;
+        $kepsek->jenis_kelamin = $request->jenis_kelamin;
+        $kepsek->no_hp         = $request->no_hp;
+        $kepsek->save();
+    });
 
-        return redirect()->route('admin.kepsek.index')->with('success', 'Data kepala sekolah berhasil diperbarui.');
-    }
+    // 4. Kembali ke halaman utama dengan pesan sukses
+    return redirect()->route('admin.kepsek.index')->with('success', 'Data kepala sekolah berhasil diperbarui.');
+}
 
     public function destroy($id)
     {
