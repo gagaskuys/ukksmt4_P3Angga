@@ -64,6 +64,7 @@ class SiswaController extends Controller
                     'jurusan_id'   => $request->jurusan_id,
                     'jenis_kelamin'=> $request->jenis_kelamin,
                     'email'        => $request->email,
+                    'password'     => Hash::make($request->password), // ❌ JANGAN SIMPAN PASSWORD DI TABEL SISWAS, itu tidak perlu dan berisiko
                     'tanggal_lahir'=> $request->tanggal_lahir,
                     'alamat'       => $request->alamat,
                     'no_telepon'   => $request->no_telepon,

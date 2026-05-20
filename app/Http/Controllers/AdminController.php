@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User; 
+use App\Models\Aspirasi;
+use App\Models\Siswa;
+use App\Models\Guru;
+use App\Models\Petugas;
+use App\Models\Kepsek;
 use Spatie\Permission\Models\Role; 
 
 class AdminController extends Controller
@@ -13,36 +18,57 @@ class AdminController extends Controller
         /** @var \App\Models\User $user */
         $user = auth()->user();
 
-        // 1. Logika untuk ADMIN (Nomor 4)
+        // 1. DASHBOARD UNTUK ADMIN (statistik lengkap)
         if ($user->hasRole('admin')) {
-            $totalSiswa = User::role('siswa')->count();
-            $totalGuru = User::role('guru')->count();
-            $totalKepsek = User::role('kepsek')->count();
-            $totalPetugas = User::role('petugas')->count();
-            $totalAspirasi = \App\Models\Aspirasi::count(); 
+            // Total data master (pakai model masing-masing)
+            $totalSiswa = Siswa::count();
+            $totalGuru = Guru::count();
+            $totalKepsek = Kepsek::count();
+            $totalPetugas = Petugas::count();
+            $totalAspirasi = Aspirasi::count();
+            
+            // Statistik berdasarkan status
+            $aspirasiMenunggu = Aspirasi::where('status', 'menunggu')->count();
+            $aspirasiProses = Aspirasi::where('status', 'proses')->count();
+            $aspirasiSelesai = Aspirasi::where('status', 'selesai')->count();
+            
+            // 5 aspirasi terbaru
+            $aspirasiTerbaru = Aspirasi::with(['siswa', 'guru', 'kategori'])
+                                ->orderBy('created_at', 'DESC')
+                                ->limit(5)
+                                ->get();
 
-            return view('admin.dashboard.admin', compact('totalSiswa', 'totalGuru', 'totalKepsek', 'totalPetugas',  'totalAspirasi'));
+            return view('admin.dashboard.admin', compact(
+                'totalSiswa', 
+                'totalGuru', 
+                'totalKepsek', 
+                'totalPetugas', 
+                'totalAspirasi',
+                'aspirasiMenunggu',
+                'aspirasiProses',
+                'aspirasiSelesai',
+                'aspirasiTerbaru'
+            ));
         } 
         
-        // 2. Logika untuk GURU (Nomor 5)
+        // 2. DASHBOARD UNTUK GURU
         if ($user->hasRole('guru')) {
-            return view('admin.guru.index');
+            return redirect()->route('guru.monitoring');
         } 
 
-        // 3. Logika untuk SISWA (Nomor 6)
+        // 3. DASHBOARD UNTUK SISWA (arahkan ke form buat aspirasi)
         if ($user->hasRole('siswa')) {
-            $totalAspirasiSaya = \App\Models\Aspirasi::where('siswa_id', $user->id)->count();
-            return view('siswa.create', compact('totalAspirasiSaya'));
+            return redirect()->route('siswa.create');
         }
 
-        // 4. Logika untuk PETUGAS (Nomor 7)
+        // 4. DASHBOARD UNTUK PETUGAS
         if ($user->hasRole('petugas')) {
-            return view('admin.petugas.index');
+            return redirect()->route('aspirasi.monitoring');
         }
 
-        // 5. Logika untuk KEPSEK (Nomor 8)
+        // 5. DASHBOARD UNTUK KEPSEK
         if ($user->hasRole('kepsek')) {
-            return view('admin.kepsek.index');
+            return redirect()->route('aspirasi.monitoring');
         }
 
         // Jika user login tapi tidak punya role di atas

@@ -54,5 +54,9 @@ class Siswa extends Model
     {
         return $this->belongsTo(Kelas::class, 'kelas_id');
     }
-        
+    // Tambahkan ini di dalam class Siswa
+    public function aspirasis()
+    {
+        return $this->hasMany(Aspirasi::class);
+    }
 }

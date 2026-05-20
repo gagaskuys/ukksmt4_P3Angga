@@ -30,33 +30,45 @@ Route::middleware(['auth'])->group(function () {
 
     // --- FITUR KHUSUS ADMIN ---
     Route::middleware(['cekrole:admin'])->prefix('admin')->name('admin.')->group(function () {
-        Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard.admin');
+        Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
         
-        // Resource ini sudah otomatis mencakup semua fungsi CRUD (Index, Create, Store, Edit, Update, Destroy)
         Route::resource('siswa', SiswaController::class);
         Route::resource('guru', GuruController::class);
         Route::resource('petugas', PetugasController::class);
         Route::resource('kepsek', KepsekController::class);
         Route::resource('kategori', KategoriController::class);
         Route::resource('ruangan', RuanganController::class);
-        
-        // CRUD KELAS & JURUSAN
         Route::resource('kelas', KelasController::class);
         Route::resource('jurusan', JurusanController::class);
     });
 
-    // --- FITUR KHUSUS SISWA ---
-    Route::middleware(['cekrole:siswa'])->group(function () {
+    // --- RUTE KHUSUS GURU ---
+    Route::middleware(['cekrole:guru'])->prefix('guru')->name('guru.')->group(function () {
+        Route::get('/dashboard', [AspirasiController::class, 'monitoring'])->name('dashboard');
+        Route::get('/aspirasi', [AspirasiController::class, 'monitoring'])->name('aspirasi.index');
+        Route::get('/laporan-selesai', [AspirasiController::class, 'monitoring'])->name('laporan.selesai');
+    });
+
+    // --- FITUR INPUT & RIWAYAT (SISWA, GURU, ADMIN) ---
+    Route::middleware(['cekrole:siswa|guru|admin'])->group(function () {
         Route::get('/aspirasi/input', [AspirasiController::class, 'create'])->name('siswa.create');
         Route::post('/aspirasi/simpan', [AspirasiController::class, 'store'])->name('aspirasi.store');
         Route::get('/aspirasi/histori', [AspirasiController::class, 'history'])->name('aspirasi.history');
+        Route::delete('/aspirasi/hapus/{id}', [AspirasiController::class, 'hapus'])->name('aspirasi.hapus');
     });
 
-    // --- FITUR MONITORING (Admin, Guru, Petugas, Kepsek) ---
+    // --- FITUR MONITORING (ADMIN, GURU, PETUGAS, KEPSEK) ---
     Route::middleware(['cekrole:admin|guru|petugas|kepsek'])->group(function () {
-        Route::get('/aspirasi/monitoring', [AspirasiController::class, 'index'])->name('aspirasi.index');
-        Route::get('/aspirasi/lihat', [AspirasiController::class, 'lihatSemua'])->name('aspirasi.lihat');
+        Route::get('/aspirasi/monitoring', [AspirasiController::class, 'monitoring'])->name('aspirasi.monitoring');
         Route::post('/aspirasi/update-status/{id}', [AspirasiController::class, 'updateStatus'])->name('aspirasi.updateStatus');
         Route::get('/aspirasi/detail/{id}', [AspirasiController::class, 'show'])->name('aspirasi.show');
     });
+
+    // --- RUTE KHUSUS PETUGAS SARANA ---
+Route::middleware(['cekrole:petugas'])->prefix('petugas')->name('petugas.')->group(function () {
+    Route::get('/dashboard', [AspirasiController::class, 'monitoring'])->name('dashboard');
+});
+    
+    // ✅ HAPUS ROUTE INI - JANGAN ADA!
+    // Route::get('/img/{filename}', function ($filename) {});
 });

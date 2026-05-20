@@ -23,25 +23,27 @@ class LoginController extends Controller
             /** @var \App\Models\User $user */
             $user = Auth::user();
 
-            // MENGUBAH PENGECEKAN: Langsung membaca properti kolom $user->role dari database
+            // ✅ SUDAH DIPERBAIKI SEMUA RUTE
             if ($user->role === 'admin') {
                 return redirect()->intended('/admin/dashboard');
             } 
             
             if ($user->role === 'guru') {
-                return redirect()->intended(route('aspirasi.lihat'));
+                return redirect()->route('guru.dashboard'); // <-- Bisa juga ke sini biar masuk menu guru
+                // return redirect()->route('aspirasi.monitoring'); // <-- Atau tetap ke sini, sama saja
             } 
             
             if ($user->role === 'siswa') {
                 return redirect()->intended(route('siswa.create'));
             } 
             
+            // ✅ UBAH: Petugas & Kepsek diarahkan ke rute yang ADA & AKTIF
             if ($user->role === 'petugas') {
-                return redirect()->intended(route('aspirasi.lihat'));
+                return redirect()->intended(route('aspirasi.monitoring'));
             } 
             
             if ($user->role === 'kepsek') {
-                return redirect()->intended(route('aspirasi.lihat'));
+                return redirect()->intended(route('aspirasi.monitoring'));
             }
 
             // Default jika tidak ada role khusus
@@ -56,6 +58,7 @@ class LoginController extends Controller
         Auth::logout();
 
         $request->session()->invalidate();
+
         $request->session()->regenerateToken();
 
         return redirect('/login');

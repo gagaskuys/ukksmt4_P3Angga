@@ -52,92 +52,125 @@
             </a>
 </a>
 <ul id="ddmenu_1" class="collapse show dropdown-nav">
-    {{-- 1. MENU DASHBOARD UTAMA (Bisa diakses SEMUA JABATAN) --}}
+
+    {{-- MENU DASHBOARD --}}
     <li class="nav-item">
-        <a href="{{ url('/dashboard') }}"> {{-- Saya ganti ke /dashboard biar sesuai rute umum --}}
-            <span class="text">Dashboard Utama</span>
+        <a href="{{ url('/dashboard') }}"> 
+            <span class="text">🏠 Dashboard Utama</span>
         </a>
     </li>
 
-    {{-- 2. MENU KHUSUS ADMIN --}}
-    @role('admin')
-    <li class="nav-item">
-        <a href="{{ route('admin.siswa.index') }}">
-            <span class="text">Kelola Data Siswa</span>
-        </a>
-    </li>
-    <li class="nav-item">
-        <a href="{{ url('/aspirasi/monitoring') }}">
-            <span class="text">Kelola Aspirasi Siswa</span>
-        </a>
-    </li>
-    <li class="nav-item">
-        <a href="{{ route('admin.kategori.index') }}">
-            <span class="text">Kelola Kategori</span>
-        </a>
-    </li>
-    <li class="nav-item">
-        <a href="{{ route('admin.kelas.index') }}">
-            <span class="text">Kelola Data Kelas</span>
-        </a>
-    </li>
-    <li class="nav-item">
-        <a href="{{ route('admin.jurusan.index') }}">
-            <span class="text">Kelola Data Jurusan</span>
-        </a>
-    </li>
-    <li class="nav-item">
-        <a href="{{ route('admin.ruangan.index') }}">
-            <span class="text">Kelola Ruangan</span>
-        </a>
-    </li>
-    <li class="nav-item">
-        <a href="{{ route('admin.guru.index') }}">
-            <span class="text">Kelola Data Guru</span>
-        </a>
-    </li>
-    <li class="nav-item">
-        <a href="{{ route('admin.kepsek.index') }}">
-            <span class="text">Kelola Data Kepala Sekolah</span>
-        </a>
-    </li>
-    <li class="nav-item">
-        <a href="{{ route('admin.petugas.index') }}">
-            <span class="text">Kelola Data Petugas</span>
-        </a>
-    </li>
-    <li class="nav-item">
-        <a href="{{ route('aspirasi.history') }}"> {{-- Saya ganti pakai nama rute biar lebih aman --}}
-            <span class="text">History Aspirasi</span>
-        </a>
-    </li>
-    @endrole
-
-    {{-- 3. MENU KHUSUS SISWA --}}
-    {{-- INI BAGIAN YANG KAMU MINTA: Cuma muncul 2 menu ini kalau siswa login --}}
-    @role('siswa')
+    {{-- MENU SISWA --}}
+    @if(Auth::check() && Auth::user()->role == 'siswa')
     <li class="nav-item">
         <a href="{{ route('siswa.create') }}">
-            <span class="text">📝 Input Aspirasi Baru</span> {{-- Saya tambah emoji biar kelihatan bagus --}}
+            <span class="text">➕ Buat Aspirasi Baru</span>
         </a>
     </li>
     <li class="nav-item">
         <a href="{{ route('aspirasi.history') }}">
-            <span class="text">📋 Lihat History Aspirasi</span>
+            <span class="text">📄 Lihat Riwayat Aspirasi</span>
         </a>
     </li>
-    @endrole
+    @endif
 
-    {{-- 4. MENU BERSAMA (GURU, PETUGAS, KEPSEK, ADMIN) --}}
-    @hasanyrole('guru|petugas|kepsek|admin')
+    {{-- MENU GURU --}}
+    @if(Auth::check() && Auth::user()->role == 'guru')
     <li class="nav-item">
-        <a href="{{ route('aspirasi.lihat') }}">
+        <a href="{{ route('guru.dashboard') }}">
+            <span class="text">🏠 Dashboard Guru</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a href="{{ route('guru.aspirasi.index') }}">
+            <span class="text">📋 Daftar Semua Aspirasi</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a href="{{ route('guru.laporan.selesai') }}">
+            <span class="text">✅ Laporan Sudah Selesai</span>
+        </a>
+    </li>
+    @endif
+
+    {{-- MENU PETUGAS --}}
+@if(Auth::check() && Auth::user()->role == 'petugas')
+<li class="nav-item">
+    <a href="{{ route('aspirasi.monitoring') }}">
+        <span class="text">📋 Monitoring Aspirasi</span>
+    </a>
+</li>
+@endif
+
+    {{-- MENU KEPSEK --}}
+    @if(Auth::check() && Auth::user()->role == 'kepsek')
+    <li class="nav-item">
+    <a href="{{ route('aspirasi.monitoring') }}">
+        <span class="text">📋 Monitoring Aspirasi</span>
+    </a>
+</li>
+    @endif
+
+    {{-- MENU ADMIN --}}
+    @if(Auth::check() && Auth::user()->role == 'admin')
+    <li class="nav-item">
+        <a href="{{ route('admin.siswa.index') }}">
+            <span class="text">👨‍🎓 Kelola Data Siswa</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a href="{{ route('admin.guru.index') }}">
+            <span class="text">👨‍🏫 Kelola Data Guru</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a href="{{ route('admin.petugas.index') }}">
+            <span class="text">🛠️ Kelola Data Petugas</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a href="{{ route('admin.kepsek.index') }}">
+            <span class="text">👔 Kelola Data Kepala Sekolah</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a href="{{ route('admin.kategori.index') }}">
+            <span class="text">📂 Kelola Kategori</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a href="{{ route('admin.ruangan.index') }}">
+            <span class="text">🚪 Kelola Ruangan</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a href="{{ route('admin.kelas.index') }}">
+            <span class="text">🏫 Kelola Data Kelas</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a href="{{ route('admin.jurusan.index') }}">
+            <span class="text">📚 Kelola Data Jurusan</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a href="{{ url('/aspirasi/monitoring') }}">
+            <span class="text">📊 Kelola Aspirasi Siswa</span>
+        </a>
+    </li>
+    @endif
+
+    {{-- MENU UNTUK GURU, PETUGAS, KEPSEK, ADMIN (SAMA) --}}
+    @if(Auth::check() && in_array(Auth::user()->role, ['guru', 'petugas', 'kepsek', 'admin']))
+    <li class="nav-item">
+        <a href="{{ route('aspirasi.monitoring') }}">
             <span class="text">👁️ Lihat Semua Aspirasi</span>
         </a>
     </li>
-    @endhasanyrole
+    @endif
 
 </ul>
+          </li>
       <li class="nav-item nav-item-has-children">
             <a
               href="#0"

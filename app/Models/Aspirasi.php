@@ -9,25 +9,39 @@ class Aspirasi extends Model
 {
     use HasFactory;
 
-    // Kolom yang boleh diisi - SUDAH DIBERSIHKAN
+    // ✅ SUDAH LENGKAP: Semua kolom wajib ada di sini biar masuk ke DB
     protected $fillable = [
         'siswa_id',
+        'guru_id',
         'kategori_id',
         'ruangan_id',
         'deskripsi_laporan',
-        'foto',
+        'foto', // <-- Ini kunci biar nama foto masuk
         'status',
+        'feedback_admin',
     ];
 
-    // Hubungan ke Tabel Kategori - SESUAI id_kategori KAMU
+    // ✅ Relasi ke Guru
+    public function guru()
+    {
+        return $this->belongsTo(Guru::class, 'guru_id', 'id');
+    }
+
+    // ✅ Relasi ke Siswa
+    public function siswa()
+    {
+        return $this->belongsTo(Siswa::class, 'siswa_id', 'id');
+    }
+
+    // ✅ Relasi ke Kategori
     public function kategori()
     {
         return $this->belongsTo(Kategori::class, 'kategori_id', 'id_kategori');
     }
 
-    // Hubungan ke Tabel Ruangan
+    // ✅ Relasi ke Ruangan
     public function ruangan()
     {
-        return $this->belongsTo(Ruangan::class, 'ruangan_id');
+        return $this->belongsTo(Ruangan::class, 'ruangan_id', 'id');
     }
 }
